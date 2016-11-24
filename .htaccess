@@ -4,3 +4,4 @@ AuthName "My Private Files"
 AuthBasicProvider ldap
 AuthLDAPURL "ldap://ldap.cs.ubc.ca:389/ou=People,dc=cs,dc=ubc,dc=ca?uid"
 Require valid-user
+

@@ -1,0 +1,12 @@
+{
+  "com": {
+    "Abstain": 1,
+    "Other Person": 2
+  },
+  "president": {
+    "Abstain": 3
+  },
+  "social": {
+    "Janet Poon": 3
+  }
+}
