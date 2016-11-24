@@ -39,6 +39,8 @@ func main() {
 		for k, v := range r.Header {
 			fmt.Fprintln(w, "Header", k+": "+strings.Join(v, ", "))
 		}
+		user, pass, ok := r.BasicAuth()
+		fmt.Fprintf(w, "User: %s, Pass: %s, OK: %v\n", user, pass, ok)
 	})); err != nil {
 		fmt.Println(err)
 	}
