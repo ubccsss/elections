@@ -88,7 +88,7 @@ func fetchLayout() error {
 		return err
 	}
 
-	stylesheets.First().SetAttr("href", "/style.css")
+	stylesheets.First().SetAttr("href", "style.css")
 	stylesheets.Slice(1, stylesheets.Length()).Remove()
 
 	if _, err = buf.WriteTo(&importBuf); err != nil {
@@ -116,7 +116,7 @@ func fetchLayout() error {
 		return err
 	}
 
-	scripts.First().SetAttr("src", "/scripts.js")
+	scripts.First().SetAttr("src", "scripts.js")
 	scripts.Slice(1, scripts.Length()).Remove()
 
 	if err = ioutil.WriteFile("scripts.js", buf.Bytes(), 0755); err != nil {

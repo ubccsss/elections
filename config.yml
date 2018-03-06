@@ -1,0 +1,84 @@
+dbpath: ./elections.db
+studentids: ./sids.txt
+email: webmaster@ubccsss.org
+bios:
+  - name: Tristan Rice
+    desc: |
+      The current webmaster and elections officer.
+      Yes, I am Tristan.
+
+positions:
+  - name: President
+    desc: |
+      Responsibilities:
+
+      * Chair all Executive meetings.
+      * Prepare the agenda for each Executive meeting.
+      * Supervise and direct the duties of the Executives.
+      * Ensure that the position of Vice President, Finance is filled.
+      * Liaise between the Department and the Club.
+      * Ensure all duties of Executives are fulfilled.
+      * Perform other duties as required.
+      * Be responsible for the overall Club.
+      * Act as chief spokesperson on behalf of the Club.
+
+    candidates:
+      - Tristan Rice
+      - Bob
+
+  - name: Vice President, Volunteering
+    desc: |
+      Responsibilities:
+
+      * Recruit undergraduate representatives to serve on Department committees.
+      * Organize the recruitment of undergraduate students in the Department into other volunteer positions.
+
+  - name: Vice President, Internal
+    desc: |
+      Responsibilities:
+
+      * Assist the President in carrying out his duties with respect to the day­to­day operations of the Club.
+      * Assist the President in personnel issues related to the Club.
+      * Manage, or appoint officer(s) to manage, the Club’s room(s) and inventories of merchandise and consumables.
+      * Organize, or appoint an officer to organize, supply runs to restock Club inventories.
+      * Chair executive meetings in the absence of the president.
+
+  - name: Vice President, External
+    desc: |
+      Responsibilities:
+
+      * Liaise with companies and other entities outside the University via the relevant member of the Department.
+      * Plan, supervise, and recruit assistance in executing the annual Career Fair.
+      * Organize the acquisition of sponsored materials from companies for use as prizes and handouts to Members.
+
+  - name: Vice President, Social
+    desc: |
+      Responsibilities;
+
+      * Be responsible for the planning, cost estimation, and execution of social and sporting events undertaken by the Club.
+
+  - name: Vice President, Communications
+    desc: |
+      Responsibilities:
+
+      * Produce all advertising pertaining to Club business in all electronic and print media.
+      * Communicate Club activities to the Members.
+
+  - name: Vice President, Finance
+    desc: |
+      Responsibilities:
+
+      * Be responsible for the finances of the Club.
+      * Prepare and submit all budgets required by the AMS and SUS.
+      * Sign all requisitions of approved expenditures.
+      * Obtain proposed expenditure estimates.
+      * Be responsible for the purchase and sale of any of the Club’s merchandise.
+      * Assist other officers in their interactions with the Alma Mater Society or any of its Commissions, if needed.
+
+  - name: Vice President, Administration
+    desc: |
+      Responsibilities:
+
+      * Take minutes at all General and Executive meetings; these minutes shall be published.
+      * Organize meetings, when needed.
+      * Direct communications between Executives, as required.

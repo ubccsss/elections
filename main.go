@@ -1,20 +1,26 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
+	"flag"
 	"fmt"
+	"html/template"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/http/cgi"
 	"os"
 	"strings"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"github.com/microcosm-cc/bluemonday"
+
+	blackfriday "gopkg.in/russross/blackfriday.v2"
+	yaml "gopkg.in/yaml.v2"
 )
-
-func handleError(w http.ResponseWriter, r *http.Request, err error) {
-	http.Error(w, err.Error(), 500)
-
-	debugInfo(w, r)
-}
 
 func debugInfo(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<h2>Debug Info</h2>")
@@ -81,57 +87,179 @@ func saveVotes(m map[string]map[string]int) error {
 	return nil
 }
 
-func main() {
-	mux := http.NewServeMux()
+type TemplateWriter struct {
+	http.ResponseWriter
+	writtenHead bool
+	footer      []byte
+	title       string
+}
 
-	mux.HandleFunc("/~q7w9a/elections/elections.cgi/vote", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "<h1>Thanks for voting!</h1>")
+func (w *TemplateWriter) Title(title string) {
+	w.title = title
+}
 
-		votes, err := loadVotes()
+func (w *TemplateWriter) Write(b []byte) (int, error) {
+	if !w.writtenHead {
+		body, err := ioutil.ReadFile("template.html")
 		if err != nil {
-			handleError(w, r, err)
-			return
+			return 0, err
 		}
 
-		r.ParseForm()
-		for k := range r.PostForm {
-			people, ok := votes[k]
-			if !ok {
-				people = make(map[string]int)
-				votes[k] = people
-			}
-			people[r.PostForm.Get(k)]++
+		seq := []byte("%s")
+		body = bytes.Replace(body, seq, []byte(w.title), 1)
+
+		idx := bytes.Index(body, seq)
+		w.ResponseWriter.Write(body[:idx])
+		w.footer = body[idx+len(seq):]
+		w.writtenHead = true
+	}
+
+	return w.ResponseWriter.Write(b)
+}
+
+func (w *TemplateWriter) Close() error {
+	if _, err := w.ResponseWriter.Write(w.footer); err != nil {
+		return err
+	}
+	return nil
+}
+
+func handleErr(f func(w *TemplateWriter, r *http.Request) error) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		wb := &TemplateWriter{ResponseWriter: w}
+		defer wb.Close()
+
+		if err := f(wb, r); err != nil {
+			w.Header().Set("X-Content-Type-Options", "nosniff")
+			w.WriteHeader(500)
+			fmt.Fprintf(wb,
+				`<h1>Error</h1>
+				<p style="color: red">%s</p>
+				<button onclick="window.history.back()">Go Back</button>`,
+				err.Error(),
+			)
 		}
+	}
+}
 
-		if err := saveVotes(votes); err != nil {
-			handleError(w, r, err)
-			return
-		}
+type Voter struct {
+	Name          string
+	Username      string
+	StudentNumber string
+}
 
-		fmt.Fprintf(w, "<p>Votes: <pre>%#v</pre></p>", votes)
+type Vote struct {
+	Position  string
+	Candidate string
+}
 
-		debugInfo(w, r)
-	})
+type Biography struct {
+	Name string
+	Desc string
+}
 
-	mux.HandleFunc("/~q7w9a/elections/elections.cgi/", func(w http.ResponseWriter, r *http.Request) {
+type Position struct {
+	Name       string
+	Desc       string
+	Candidates []string
+}
+
+type Config struct {
+	DBPath    string
+	Email     string
+	Bios      []Biography
+	Positions []Position
+}
+
+var migrate = flag.Bool("migrate", false, "migrate the database")
+
+func main() {
+	var c Config
+	rawConfig, err := ioutil.ReadFile("config.yml")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := yaml.Unmarshal(rawConfig, &c); err != nil {
+		log.Fatal(err)
+	}
+
+	if len(c.DBPath) == 0 {
+		log.Fatal("dbpath empty!")
+	}
+
+	// NOTE: this database has to be able to be opened and edited by multiple
+	// clients at the same time since this is a CGI based program and there may
+	// be n copies operating at the same time.
+	db, err := gorm.Open("sqlite3", c.DBPath)
+	if err != nil {
+		log.Fatal("failed to connect database")
+	}
+	defer db.Close()
+
+	flag.Parse()
+	if *migrate {
+		db.AutoMigrate(&Voter{})
+		db.AutoMigrate(&Vote{})
+		return
+	}
+
+	mux := http.NewServeMux()
+	mux.HandleFunc("/vote", handleErr(func(w *TemplateWriter, r *http.Request) error {
+		http.ServeFile(w, r, "voted.html")
+		return nil
+	}))
+
+	mux.HandleFunc("/debug", debugInfo)
+
+	static := http.FileServer(http.Dir("."))
+	mux.Handle("/style.css", static)
+	mux.Handle("/scripts.js", static)
+
+	mux.HandleFunc("/", handleErr(func(w *TemplateWriter, r *http.Request) error {
 		user := os.Getenv("REMOTE_USER")
 		if len(user) == 0 {
-			http.Error(w, "missing REMOTE_USER", 400)
-			return
+			return errors.New("missing REMOTE_USER")
 		}
-		fmt.Fprintf(w, "<h1>Welcome, %s</h1>", user)
 
-		form, err := ioutil.ReadFile("elections.html")
+		tmpl := template.New("elections.html")
+		tmpl.Funcs(map[string]interface{}{
+			"concat": func(a, b string) string {
+				return a + b
+			},
+			"slug": func(s string) string {
+				return strings.ToLower(strings.Replace(s, " ", "-", -1))
+			},
+			"md": func(s string) template.HTML {
+				unsafe := blackfriday.Run([]byte(s))
+				return template.HTML(string(bluemonday.UGCPolicy().SanitizeBytes(unsafe)))
+			},
+		})
+
+		tmpl, err := tmpl.ParseFiles("elections.html")
 		if err != nil {
-			handleError(w, r, err)
-			return
+			return err
 		}
-		w.Write(form)
+		return tmpl.Execute(w, struct {
+			Config
+			User string
+		}{
+			Config: c,
+			User:   user,
+		})
+	}))
 
-		debugInfo(w, r)
-	})
-
-	if err := cgi.Serve(mux); err != nil {
+	if err := cgi.Serve(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		bits := strings.Split(r.URL.Path, "elections.cgi")
+		if len(bits) == 2 {
+			r.URL.Path = bits[1]
+			if r.URL.Path == "" {
+				r.URL.Path = "/"
+			}
+		}
+		mux.ServeHTTP(w, r)
+	})); err != nil {
 		fmt.Println(err)
 	}
 }

@@ -1,18 +1,67 @@
+<style>
+.desc {
+  padding-left: 10px;
+  border-left: 2px solid #ddd;
+}
+.form-group label {
+  display: block;
+}
+</style>
+
+<h1 class="page-header">CSSS Elections</h1>
+
+<p>Welcome, {{.User}}! This is the Computer Science Student Societies online election system.</p>
+
+<p>
+	If you have any questions or issues please reach out to the elections officer (<a href="mailto:{{.Email}}">{{.Email}}</a>)
+</p>
+
+<h2>Vote</h2>
+
 <form method="POST" action="vote">
-  <h2>President</h2>
-  <input name="president" type="radio" value="Abstain">Abstain<br>
-  <input name="president" type="radio" value="Janet Poon">Janet Poon<br>
-  <input name="president" type="radio" value="Other Person">Other Person<br>
+  <div class="form-group">
+		<label for="name">Full Name</label>
+		<input id="name" name="name" type="text" placeholder="Your Name">
+	</div>
 
-  <h2>VP Social</h2>
-  <input name="social" type="radio" value="Abstain">Abstain<br>
-  <input name="social" type="radio" value="Janet Poon">Janet Poon<br>
-  <input name="social" type="radio" value="Other Person">Other Person<br>
+	<div class="form-group">
+		<label for="student_number">Student Number</label>
+		<input id="student_number" name="student_number" type="number" placeholder="00000000">
+	</div>
 
-  <h2>VP Communications</h2>
-  <input name="com" type="radio" value="Abstain">Abstain<br>
-  <input name="com" type="radio" value="Janet Poon">Janet Poon<br>
-  <input name="com" type="radio" value="Other Person">Other Person<br>
+  {{range .Positions}}
+    {{ $name := .Name }}
+    <h3>{{$name}}</h3>
+
+    <div class="desc">
+    {{md .Desc}}
+    </div>
+
+    {{range .Candidates}}
+      <div>
+        {{$id := slug (concat $name .)}}
+        <input id="{{$id}}" name="{{$name}}" type="radio" value="{{.}}">
+        <label for="{{$id}}">{{.}}</label>
+        <a href="#{{slug .}}">Biography</a>
+      </div>
+    {{end}}
+
+    {{$id := slug (concat $name "abstain")}}
+    <input id="{{$id}}" name="{{$name}}" type="radio" value="Abstain">
+    <label for="{{$id}}">Abstain</label>
+  {{end}}
+
+  <br>
+  <br>
 
   <input type="submit" value="Submit">
 </form>
+
+<h2>Biographies</h2>
+
+{{range .Bios}}
+  <h3 id="{{slug .Name}}">{{.Name}}</h3>
+  <div class="desc">
+    {{md .Desc}}
+  </div>
+{{end}}
