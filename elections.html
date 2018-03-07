@@ -13,21 +13,22 @@
 <p>Welcome, {{.User}}! This is the Computer Science Student Societies online election system.</p>
 
 <p>
-	If you have any questions or issues please reach out to the elections officer (<a href="mailto:{{.Email}}">{{.Email}}</a>)
+If you have any questions or issues please reach out to the elections officer
+(<a href="mailto:{{.Email}}">{{.Email}}</a>).
 </p>
 
 <h2>Vote</h2>
 
-<form method="POST" action="vote">
+<form method="POST" action="vote" method="post">
   <div class="form-group">
-		<label for="name">Full Name</label>
-		<input id="name" name="name" type="text" placeholder="Your Name">
-	</div>
+    <label for="name">Full Name</label>
+    <input id="name" name="name" type="text" placeholder="Your Name">
+  </div>
 
-	<div class="form-group">
-		<label for="student_number">Student Number</label>
-		<input id="student_number" name="student_number" type="number" placeholder="00000000">
-	</div>
+  <div class="form-group">
+    <label for="student_number">Student Number</label>
+    <input id="student_number" name="student_number" type="number" placeholder="00000000">
+  </div>
 
   {{range .Positions}}
     {{ $name := .Name }}
@@ -37,7 +38,7 @@
     {{md .Desc}}
     </div>
 
-    {{range .Candidates}}
+    {{range (shuffle .Candidates)}}
       <div>
         {{$id := slug (concat $name .)}}
         <input id="{{$id}}" name="{{$name}}" type="radio" value="{{.}}">
@@ -46,9 +47,17 @@
       </div>
     {{end}}
 
-    {{$id := slug (concat $name "abstain")}}
-    <input id="{{$id}}" name="{{$name}}" type="radio" value="Abstain">
-    <label for="{{$id}}">Abstain</label>
+    <div>
+      {{$id := slug (concat $name "reopen")}}
+      <input id="{{$id}}" name="{{$name}}" type="radio" value="Reopen Nominations">
+      <label for="{{$id}}">Reopen Nominations</label>
+    </div>
+
+    <div>
+      {{$id := slug (concat $name "abstain")}}
+      <input id="{{$id}}" name="{{$name}}" type="radio" value="Abstain">
+      <label for="{{$id}}">Abstain</label>
+    </div>
   {{end}}
 
   <br>

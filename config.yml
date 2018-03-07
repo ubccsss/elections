@@ -1,5 +1,9 @@
-dbpath: ./elections.db
-studentids: ./sids.txt
+dbpath: /home/q/q7w9a/elections.db
+open: true
+admins:
+  - q7w9a
+studentids: "/home/q/q7w9a/sids.txt"
+privatekey: "/home/q/q7w9a/.ssh/id_rsa"
 email: webmaster@ubccsss.org
 bios:
   - name: Tristan Rice
@@ -32,6 +36,9 @@ positions:
 
       * Recruit undergraduate representatives to serve on Department committees.
       * Organize the recruitment of undergraduate students in the Department into other volunteer positions.
+
+    candidates:
+      - Bob
 
   - name: Vice President, Internal
     desc: |

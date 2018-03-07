@@ -2,21 +2,30 @@ package main
 
 import (
 	"bytes"
+	"crypto"
+	"crypto/rand"
+	"crypto/sha1"
+	"crypto/x509"
+	"encoding/hex"
 	"encoding/json"
-	"errors"
+	"encoding/pem"
 	"flag"
 	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
+	mrand "math/rand"
 	"net/http"
 	"net/http/cgi"
 	"os"
+	"os/user"
 	"strings"
+	"time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/microcosm-cc/bluemonday"
+	"github.com/pkg/errors"
 
 	blackfriday "gopkg.in/russross/blackfriday.v2"
 	yaml "gopkg.in/yaml.v2"
@@ -58,6 +67,11 @@ func debugInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	for _, env := range os.Environ() {
 		fmt.Fprintf(w, "Env: %s\n", env)
+	}
+	u, _ := user.Current()
+	if u != nil {
+		fmt.Fprintf(w, "Username: %s\n", u.Username)
+		fmt.Fprintf(w, "Name: %s\n", u.Name)
 	}
 	w.Write([]byte("</pre>"))
 }
@@ -131,13 +145,16 @@ func handleErr(f func(w *TemplateWriter, r *http.Request) error) http.HandlerFun
 		defer wb.Close()
 
 		if err := f(wb, r); err != nil {
+			wb.Title("Error")
 			w.Header().Set("X-Content-Type-Options", "nosniff")
 			w.WriteHeader(500)
 			fmt.Fprintf(wb,
 				`<h1>Error</h1>
 				<p style="color: red">%s</p>
+				<p>If the error persists, please contact the elections officer (<a href="mailto:%s">%s</a>).</p>
 				<button onclick="window.history.back()">Go Back</button>`,
 				err.Error(),
+				c.Email, c.Email,
 			)
 		}
 	}
@@ -145,11 +162,17 @@ func handleErr(f func(w *TemplateWriter, r *http.Request) error) http.HandlerFun
 
 type Voter struct {
 	Name          string
-	Username      string
+	Username      string `gorm:"primary_key"`
 	StudentNumber string
+
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt *time.Time `sql:"index"`
 }
 
 type Vote struct {
+	gorm.Model
+
 	Position  string
 	Candidate string
 }
@@ -166,16 +189,20 @@ type Position struct {
 }
 
 type Config struct {
-	DBPath    string
-	Email     string
-	Bios      []Biography
-	Positions []Position
+	Open       bool
+	Admins     []string
+	DBPath     string
+	Email      string
+	StudentIDs string
+	PrivateKey string
+	Bios       []Biography
+	Positions  []Position
 }
 
 var migrate = flag.Bool("migrate", false, "migrate the database")
+var c Config
 
 func main() {
-	var c Config
 	rawConfig, err := ioutil.ReadFile("config.yml")
 	if err != nil {
 		log.Fatal(err)
@@ -205,10 +232,161 @@ func main() {
 		return
 	}
 
+	tmpl := template.New("")
+	tmpl.Funcs(map[string]interface{}{
+		"shuffle": func(src []string) []string {
+			dest := make([]string, len(src))
+			perm := mrand.Perm(len(src))
+			for i, v := range perm {
+				dest[v] = src[i]
+			}
+			return dest
+		},
+		"concat": func(a, b string) string {
+			return a + b
+		},
+		"slug": func(s string) string {
+			return strings.ToLower(strings.Replace(s, " ", "-", -1))
+		},
+		"md": func(s string) template.HTML {
+			unsafe := blackfriday.Run([]byte(s))
+			return template.HTML(string(bluemonday.UGCPolicy().SanitizeBytes(unsafe)))
+		},
+	})
+
+	tmpl, err = tmpl.ParseFiles("elections.html", "voted.html", "admin.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("/vote", handleErr(func(w *TemplateWriter, r *http.Request) error {
-		http.ServeFile(w, r, "voted.html")
-		return nil
+		if r.Method != http.MethodPost {
+			return errors.New("must use post")
+		}
+		if !c.Open {
+			return errors.New("voting is closed")
+		}
+		if err := r.ParseForm(); err != nil {
+			return err
+		}
+
+		name := strings.TrimSpace(r.FormValue("name"))
+		if name == "" {
+			return errors.New("All fields are required. You need to specify your full name.")
+		}
+		sid := strings.TrimSpace(r.FormValue("student_number"))
+		if sid == "" {
+			return errors.New("All fields are required. Student number missing.")
+		}
+		for _, position := range c.Positions {
+			val := r.FormValue(position.Name)
+			if val == "" {
+				return errors.Errorf("All fields required. Position %q is missing.", position.Name)
+			}
+			if val == "Abstain" || val == "Reopen Nominations" {
+				continue
+			}
+			found := false
+			for _, candidate := range position.Candidates {
+				if candidate == val {
+					found = true
+					break
+				}
+			}
+			if !found {
+				return errors.Errorf("invalid candidate %q for position %q", val, position.Name)
+			}
+		}
+
+		user := os.Getenv("REMOTE_USER")
+		if len(user) == 0 {
+			return errors.New("missing REMOTE_USER")
+		}
+
+		sidsRaw, err := ioutil.ReadFile(c.StudentIDs)
+		if err != nil {
+			return err
+		}
+		sids := strings.Split(strings.TrimSpace(string(sidsRaw)), "\n")
+		found := false
+		for _, sid2 := range sids {
+			if sid == strings.TrimSpace(sid2) {
+				found = true
+				break
+			}
+		}
+		if !found {
+			return errors.Errorf("Invalid student number %q. Make sure you typed it in correctly and that you're a computer science student.", sid)
+		}
+
+		// We've validated votes, now insert into database.
+
+		tx := db.Begin()
+
+		count := 0
+		if err := tx.Model(&Voter{}).Where("username = ? or student_number = ?", user, sid).Count(&count).Error; err != nil {
+			return err
+		}
+		if count >= 1 {
+			return errors.Errorf("This user name or student number has already voted.")
+		}
+
+		if err := tx.Create(&Voter{
+			Username:      user,
+			Name:          name,
+			StudentNumber: sid,
+		}).Error; err != nil {
+			return err
+		}
+
+		for _, position := range c.Positions {
+			val := r.FormValue(position.Name)
+			if err := tx.Create(&Vote{
+				Position:  position.Name,
+				Candidate: val,
+			}).Error; err != nil {
+				return err
+			}
+		}
+
+		if err := tx.Commit().Error; err != nil {
+			return err
+		}
+
+		// Generate cryptographic receipt for votes.
+		var body bytes.Buffer
+		fmt.Fprintf(&body, "User: %s\n", user)
+		for k, v := range r.Form {
+			fmt.Fprintf(&body, "- %s: %+v\n", k, v)
+		}
+
+		privKey, err := ioutil.ReadFile(c.PrivateKey)
+		if err != nil {
+			return errors.Wrapf(err, "file %q", c.PrivateKey)
+		}
+		block, _ := pem.Decode(privKey)
+		if block == nil {
+			return errors.New("failed to parse PEM block containing the key")
+		}
+		key, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+		if err != nil {
+			return err
+		}
+		hash := sha1.Sum(body.Bytes())
+		if err != nil {
+			return err
+		}
+		sig, err := key.Sign(rand.Reader, hash[:], crypto.SHA1)
+		if err != nil {
+			return err
+		}
+		body.WriteString("\n")
+		body.WriteString(hex.EncodeToString(sig))
+		body.WriteString("\n")
+
+		w.Title("Voted")
+		return tmpl.ExecuteTemplate(w, "voted.html", body.String())
 	}))
 
 	mux.HandleFunc("/debug", debugInfo)
@@ -217,31 +395,68 @@ func main() {
 	mux.Handle("/style.css", static)
 	mux.Handle("/scripts.js", static)
 
+	mux.HandleFunc("/admin", handleErr(func(w *TemplateWriter, r *http.Request) error {
+		user := os.Getenv("REMOTE_USER")
+		if len(user) == 0 {
+			return errors.New("missing REMOTE_USER")
+		}
+
+		w.Title("Admin")
+
+		found := false
+		for _, admin := range c.Admins {
+			if admin == user {
+				found = true
+				break
+			}
+		}
+
+		if !found {
+			return errors.New("must be an admin")
+		}
+
+		var body bytes.Buffer
+		var voters []Voter
+		if err := db.Find(&voters).Error; err != nil {
+			return err
+		}
+
+		rows, err := db.Model(&Vote{}).Select("position, candidate, count(*)").Group("position, candidate").Order("position DESC, candidate DESC").Rows()
+		if err != nil {
+			return err
+		}
+
+		fmt.Fprintf(&body, "Results\n")
+		for rows.Next() {
+			var position, candidate string
+			var count int
+			if err := rows.Scan(&position, &candidate, &count); err != nil {
+				return err
+			}
+			fmt.Fprintf(&body, "- %s - %s: %d\n", position, candidate, count)
+		}
+
+		fmt.Fprintf(&body, "Voter count: %d\n", len(voters))
+		for _, v := range voters {
+			fmt.Fprintf(&body, "- %s, %s, %s\n", v.StudentNumber, v.Name, v.Username)
+		}
+
+		return tmpl.ExecuteTemplate(w, "admin.html", body.String())
+	}))
+
 	mux.HandleFunc("/", handleErr(func(w *TemplateWriter, r *http.Request) error {
 		user := os.Getenv("REMOTE_USER")
 		if len(user) == 0 {
 			return errors.New("missing REMOTE_USER")
 		}
 
-		tmpl := template.New("elections.html")
-		tmpl.Funcs(map[string]interface{}{
-			"concat": func(a, b string) string {
-				return a + b
-			},
-			"slug": func(s string) string {
-				return strings.ToLower(strings.Replace(s, " ", "-", -1))
-			},
-			"md": func(s string) template.HTML {
-				unsafe := blackfriday.Run([]byte(s))
-				return template.HTML(string(bluemonday.UGCPolicy().SanitizeBytes(unsafe)))
-			},
-		})
+		w.Title("Elections")
 
-		tmpl, err := tmpl.ParseFiles("elections.html")
-		if err != nil {
-			return err
+		if !c.Open {
+			return errors.New("voting is closed")
 		}
-		return tmpl.Execute(w, struct {
+
+		return tmpl.ExecuteTemplate(w, "elections.html", struct {
 			Config
 			User string
 		}{
