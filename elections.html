@@ -38,24 +38,36 @@ If you have any questions or issues please reach out to the elections officer
     {{md .Desc}}
     </div>
 
+    {{$numCandidates := len .Candidates}}
+
     {{range (shuffle .Candidates)}}
       <div>
-        {{$id := slug (concat $name .)}}
-        <input id="{{$id}}" name="{{$name}}" type="radio" value="{{.}}">
+        {{$id := slug (concat $name "-" .)}}
+
+        {{if le $numCandidates 1}}
+          <input id="{{$id}}" name="{{$name}}" type="radio" value="{{.}}" group="{{$name}}">
+        {{else}}
+          <select id="{{$id}}" name="{{$id}}" group="{{$name}}">
+            <option value="">--</option>
+            {{range (seq $numCandidates)}}
+              <option value="{{.}}">{{.}}</option>
+            {{end}}
+          </select>
+        {{end}}
         <label for="{{$id}}">{{.}}</label>
         <a href="#{{slug .}}">Biography</a>
       </div>
     {{end}}
 
     <div>
-      {{$id := slug (concat $name "reopen")}}
-      <input id="{{$id}}" name="{{$name}}" type="radio" value="Reopen Nominations">
+      {{$id := slug (concat $name "-" "reopen")}}
+      <input id="{{$id}}" name="{{$name}}" type="radio" value="Reopen Nominations" group="{{$name}}">
       <label for="{{$id}}">Reopen Nominations</label>
     </div>
 
     <div>
-      {{$id := slug (concat $name "abstain")}}
-      <input id="{{$id}}" name="{{$name}}" type="radio" value="Abstain">
+      {{$id := slug (concat $name "-abstain")}}
+      <input id="{{$id}}" name="{{$name}}" type="radio" value="Abstain" group="{{$name}}">
       <label for="{{$id}}">Abstain</label>
     </div>
   {{end}}
@@ -74,3 +86,24 @@ If you have any questions or issues please reach out to the elections officer
     {{md .Desc}}
   </div>
 {{end}}
+
+<script>
+const inputs = Array.from(document.querySelectorAll('input[group], select[group]'))
+inputs.forEach(function (input) {
+  input.addEventListener('change', function (e) {
+    const el = e.target
+
+    inputs.forEach(function (input) {
+      if (input.getAttribute('group') !== el.getAttribute('group') || input === el) {
+        return
+      }
+
+      if (input.type === 'radio') {
+        input.checked = false
+      } else if (el.type === 'radio' && input.nodeName === 'SELECT') {
+        input.value = ''
+      }
+    })
+  })
+})
+</script>

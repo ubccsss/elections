@@ -242,8 +242,8 @@ func main() {
 			}
 			return dest
 		},
-		"concat": func(a, b string) string {
-			return a + b
+		"concat": func(a ...string) string {
+			return strings.Join(a, "")
 		},
 		"slug": func(s string) string {
 			return strings.ToLower(strings.Replace(s, " ", "-", -1))
@@ -251,6 +251,13 @@ func main() {
 		"md": func(s string) template.HTML {
 			unsafe := blackfriday.Run([]byte(s))
 			return template.HTML(string(bluemonday.UGCPolicy().SanitizeBytes(unsafe)))
+		},
+		"seq": func(n int) []int {
+			var nums []int
+			for i := 1; i <= n; i++ {
+				nums = append(nums, i)
+			}
+			return nums
 		},
 	})
 
