@@ -6,6 +6,13 @@
 .form-group label {
   display: block;
 }
+.csv:after {
+  color: inherit;
+  content: ",";
+}
+.csv:last-child:after {
+  content: "";
+}
 </style>
 
 <h1 class="page-header">CSSS Elections</h1>
@@ -32,7 +39,7 @@ If you have any questions or issues please reach out to the elections officer
 
   {{range .Positions}}
     {{ $name := .Name }}
-    <h3>{{$name}}</h3>
+    <h3 id="{{slug $name}}">{{$name}}</h3>
 
     <div class="desc">
     {{md .Desc}}
@@ -55,7 +62,9 @@ If you have any questions or issues please reach out to the elections officer
           </select>
         {{end}}
         <label for="{{$id}}">{{.}}</label>
+        {{if hasBio .}}
         <a href="#{{slug .}}">Biography</a>
+        {{end}}
       </div>
     {{end}}
 
@@ -80,8 +89,13 @@ If you have any questions or issues please reach out to the elections officer
 
 <h2>Biographies</h2>
 
-{{range .Bios}}
+{{range (shuffle .Bios)}}
   <h3 id="{{slug .Name}}">{{.Name}}</h3>
+  <p>Running for:
+    {{range .Positions}}
+      <a class="csv" href="#{{slug .}}">{{.}}</a>
+    {{end}}
+  </p>
   <div class="desc">
     {{md .Desc}}
   </div>

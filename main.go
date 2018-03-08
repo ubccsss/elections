@@ -6,7 +6,7 @@ import (
 	"crypto/rand"
 	"crypto/sha1"
 	"crypto/x509"
-	"encoding/hex"
+	"encoding/base64"
 	"encoding/json"
 	"encoding/pem"
 	"flag"
@@ -19,9 +19,14 @@ import (
 	"net/http/cgi"
 	"os"
 	"os/user"
+	"reflect"
+	"sort"
+	"strconv"
 	"strings"
 	"time"
 
+	"github.com/Sam-Izdat/govote"
+	"github.com/gosimple/slug"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/microcosm-cc/bluemonday"
@@ -74,31 +79,6 @@ func debugInfo(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Name: %s\n", u.Name)
 	}
 	w.Write([]byte("</pre>"))
-}
-
-const voteFile = "votes.json"
-
-func loadVotes() (map[string]map[string]int, error) {
-	m := map[string]map[string]int{}
-	file, err := ioutil.ReadFile(voteFile)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(file, &m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func saveVotes(m map[string]map[string]int) error {
-	buf, err := json.MarshalIndent(m, "", "  ")
-	if err != nil {
-		return err
-	}
-	if err := ioutil.WriteFile(voteFile, buf, 0755); err != nil {
-		return err
-	}
-	return nil
 }
 
 type TemplateWriter struct {
@@ -178,8 +158,9 @@ type Vote struct {
 }
 
 type Biography struct {
-	Name string
-	Desc string
+	Name      string
+	Desc      string
+	Positions []string
 }
 
 type Position struct {
@@ -202,7 +183,12 @@ type Config struct {
 var migrate = flag.Bool("migrate", false, "migrate the database")
 var c Config
 
+func slugify(s string) string {
+	return slug.Make(s)
+}
+
 func main() {
+	mrand.Seed(time.Now().UnixNano())
 	rawConfig, err := ioutil.ReadFile("config.yml")
 	if err != nil {
 		log.Fatal(err)
@@ -210,6 +196,16 @@ func main() {
 
 	if err := yaml.Unmarshal(rawConfig, &c); err != nil {
 		log.Fatal(err)
+	}
+
+	positions := map[string][]string{}
+	for _, p := range c.Positions {
+		for _, c := range p.Candidates {
+			positions[c] = append(positions[c], p.Name)
+		}
+	}
+	for i, b := range c.Bios {
+		c.Bios[i].Positions = positions[b.Name]
 	}
 
 	if len(c.DBPath) == 0 {
@@ -234,20 +230,20 @@ func main() {
 
 	tmpl := template.New("")
 	tmpl.Funcs(map[string]interface{}{
-		"shuffle": func(src []string) []string {
-			dest := make([]string, len(src))
-			perm := mrand.Perm(len(src))
+		"shuffle": func(src interface{}) interface{} {
+			srcR := reflect.ValueOf(src)
+			l := srcR.Len()
+			dest := reflect.MakeSlice(srcR.Type(), l, l)
+			perm := mrand.Perm(l)
 			for i, v := range perm {
-				dest[v] = src[i]
+				dest.Index(v).Set(srcR.Index(i))
 			}
-			return dest
+			return dest.Interface()
 		},
 		"concat": func(a ...string) string {
 			return strings.Join(a, "")
 		},
-		"slug": func(s string) string {
-			return strings.ToLower(strings.Replace(s, " ", "-", -1))
-		},
+		"slug": slugify,
 		"md": func(s string) template.HTML {
 			unsafe := blackfriday.Run([]byte(s))
 			return template.HTML(string(bluemonday.UGCPolicy().SanitizeBytes(unsafe)))
@@ -258,6 +254,14 @@ func main() {
 				nums = append(nums, i)
 			}
 			return nums
+		},
+		"hasBio": func(candidate string) bool {
+			for _, b := range c.Bios {
+				if b.Name == candidate {
+					return true
+				}
+			}
+			return false
 		},
 	})
 
@@ -286,24 +290,59 @@ func main() {
 		if sid == "" {
 			return errors.New("All fields are required. Student number missing.")
 		}
+
+		type rank struct {
+			rank   int
+			choice string
+		}
+
+		positionChoices := map[string][]string{}
+
 		for _, position := range c.Positions {
 			val := r.FormValue(position.Name)
-			if val == "" {
-				return errors.Errorf("All fields required. Position %q is missing.", position.Name)
-			}
-			if val == "Abstain" || val == "Reopen Nominations" {
+			var ranks []rank
+			if val == "Abstain" {
 				continue
 			}
-			found := false
+			if val == "Reopen Nominations" {
+				ranks = append(ranks, rank{
+					rank:   0,
+					choice: val,
+				})
+			}
 			for _, candidate := range position.Candidates {
 				if candidate == val {
-					found = true
-					break
+					ranks = append(ranks, rank{
+						rank:   0,
+						choice: candidate,
+					})
+					continue
+				}
+				id := slugify(position.Name + "-" + candidate)
+				candidateVal := r.FormValue(id)
+				if candidateVal != "" {
+					r, err := strconv.Atoi(candidateVal)
+					if err != nil {
+						return err
+					}
+					ranks = append(ranks, rank{
+						rank:   r,
+						choice: candidate,
+					})
 				}
 			}
-			if !found {
-				return errors.Errorf("invalid candidate %q for position %q", val, position.Name)
+			if len(ranks) == 0 {
+				return errors.Errorf("All fields are required. Invalid or missing position %q.", position.Name)
 			}
+
+			sort.Slice(ranks, func(i, j int) bool {
+				return ranks[i].rank < ranks[j].rank
+			})
+			var choices []string
+			for _, r := range ranks {
+				choices = append(choices, r.choice)
+			}
+			positionChoices[position.Name] = choices
 		}
 
 		user := os.Getenv("REMOTE_USER")
@@ -347,11 +386,14 @@ func main() {
 			return err
 		}
 
-		for _, position := range c.Positions {
-			val := r.FormValue(position.Name)
+		for position, choices := range positionChoices {
+			jsonChoices, err := json.Marshal(choices)
+			if err != nil {
+				return err
+			}
 			if err := tx.Create(&Vote{
-				Position:  position.Name,
-				Candidate: val,
+				Position:  position,
+				Candidate: string(jsonChoices),
 			}).Error; err != nil {
 				return err
 			}
@@ -364,6 +406,7 @@ func main() {
 		// Generate cryptographic receipt for votes.
 		var body bytes.Buffer
 		fmt.Fprintf(&body, "User: %s\n", user)
+		fmt.Fprintf(&body, "Time: %s\n", time.Now().String())
 		for k, v := range r.Form {
 			fmt.Fprintf(&body, "- %s: %+v\n", k, v)
 		}
@@ -389,7 +432,7 @@ func main() {
 			return err
 		}
 		body.WriteString("\n")
-		body.WriteString(hex.EncodeToString(sig))
+		body.WriteString(base64.StdEncoding.EncodeToString(sig))
 		body.WriteString("\n")
 
 		w.Title("Voted")
@@ -428,22 +471,52 @@ func main() {
 			return err
 		}
 
-		rows, err := db.Model(&Vote{}).Select("position, candidate, count(*)").Group("position, candidate").Order("position DESC, candidate DESC").Rows()
-		if err != nil {
+		polls := map[string]*govote.InstantRunoffPoll{}
+		for _, position := range c.Positions {
+			candidates := append(position.Candidates, "Reopen Nominations")
+			if len(candidates) < 2 {
+				candidates = append(candidates, "no one")
+			}
+			poll, err := govote.InstantRunoff.New(candidates)
+			if err != nil {
+				return errors.Wrapf(err, "position %+v; candidates %+v", position, candidates)
+			}
+			polls[position.Name] = &poll
+		}
+
+		var votes []Vote
+		if err := db.Find(&votes).Error; err != nil {
 			return err
 		}
 
-		fmt.Fprintf(&body, "Results\n")
-		for rows.Next() {
-			var position, candidate string
-			var count int
-			if err := rows.Scan(&position, &candidate, &count); err != nil {
+		for _, v := range votes {
+			var candidates []string
+			if err := json.Unmarshal([]byte(v.Candidate), &candidates); err != nil {
 				return err
 			}
-			fmt.Fprintf(&body, "- %s - %s: %d\n", position, candidate, count)
+			if !polls[v.Position].AddBallot(candidates) {
+				fmt.Fprintf(&body, "error: Failed to AddBallot for vote: %#v\n", v)
+			}
 		}
 
-		fmt.Fprintf(&body, "Voter count: %d\n", len(voters))
+		fmt.Fprintf(&body, "Results:\n")
+		for _, p := range c.Positions {
+			poll := polls[p.Name]
+			winners, rounds, err := poll.Evaluate()
+			if err != nil {
+				fmt.Fprintf(&body, "- %s:\n  error: %+v\n", p.Name, err)
+			} else {
+				fmt.Fprintf(&body, "- %s:\n  Winner: %s\n", p.Name, strings.Join(winners, ","))
+				for i, round := range rounds {
+					fmt.Fprintf(&body, "  - Round %d:\n", i)
+					for _, p := range round {
+						fmt.Fprintf(&body, "    - %+v\n", p)
+					}
+				}
+			}
+		}
+
+		fmt.Fprintf(&body, "\nVoter count: %d\nVoters:\n", len(voters))
 		for _, v := range voters {
 			fmt.Fprintf(&body, "- %s, %s, %s\n", v.StudentNumber, v.Name, v.Username)
 		}

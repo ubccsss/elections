@@ -9,7 +9,10 @@ bios:
   - name: Tristan Rice
     desc: |
       The current webmaster and elections officer.
+
       Yes, I am Tristan.
+  - name: Megan
+    desc: I will be a very good VPI, yes.
 
 positions:
   - name: President
@@ -50,6 +53,11 @@ positions:
       * Organize, or appoint an officer to organize, supply runs to restock Club inventories.
       * Chair executive meetings in the absence of the president.
 
+    candidates:
+      - Jill
+      - Jennifer
+      - Megan
+
   - name: Vice President, External
     desc: |
       Responsibilities:
@@ -63,6 +71,9 @@ positions:
       Responsibilities;
 
       * Be responsible for the planning, cost estimation, and execution of social and sporting events undertaken by the Club.
+
+    candidates:
+      - Megan
 
   - name: Vice President, Communications
     desc: |
