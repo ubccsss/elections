@@ -14,6 +14,38 @@ bios:
       Yes, I am Tristan.
   - name: Megan
     desc: I will be a very good VPI, yes.
+  - name: Jill
+    image: https://i.pinimg.com/236x/de/4d/af/de4daf20b7e43fc4bca3450d86a1a32c--backpack-coding.jpg
+    desc: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis
+      tincidunt lorem. Suspendisse orci urna, tincidunt non porttitor et,
+      euismod nec ipsum. Vestibulum ac sagittis nisl. Ut ut ipsum et libero
+      ultrices laoreet in porttitor purus. Aliquam sodales porttitor augue, id
+      mollis eros lacinia vitae. Aliquam rutrum orci sit amet bibendum sagittis.
+      Vivamus eu malesuada est. Quisque eget sagittis arcu. Nullam egestas
+      consectetur risus. Sed id cursus massa. Maecenas bibendum ornare aliquet.
+      Interdum et malesuada fames ac ante ipsum primis in faucibus.
+
+      Duis condimentum varius consequat. Nunc ut nibh id erat sagittis volutpat
+      eget eu ante. Aliquam nec aliquam nibh. Proin vitae risus ac velit maximus
+      dapibus nec at quam. Maecenas consectetur, urna eu tincidunt aliquam,
+      risus tellus aliquet metus, in scelerisque massa nunc sit amet est.
+      Curabitur mattis nec sem egestas maximus. Phasellus malesuada augue sit
+      amet tellus interdum, at lobortis lorem imperdiet. Curabitur ornare quam
+      mattis massa tincidunt volutpat. Sed aliquam nec ex ac vehicula. Donec
+      lacus nisl, ornare vitae dolor id, vestibulum venenatis ex. Proin
+      scelerisque arcu at diam sodales placerat. Donec aliquet ligula turpis,
+      non semper ante fermentum vel. In tincidunt sodales enim condimentum
+      porta.
+
+      Fusce in dui vitae magna semper ultrices. Aenean commodo tortor at mi
+      sagittis vehicula. Mauris facilisis felis non purus vehicula consectetur
+      sed id ante. Maecenas dignissim ipsum lectus, ac condimentum tortor
+      malesuada id. Suspendisse urna arcu, iaculis non dolor quis, lacinia
+      viverra ante. In hac habitasse platea dictumst. Nunc venenatis nulla
+      nulla, vitae facilisis neque ullamcorper in. Nam iaculis tellus vitae.
+
+
 
 positions:
   - name: President

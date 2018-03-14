@@ -14,10 +14,18 @@
   content: "";
 }
 .image {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  display: inline-block;
   float: right;
-  max-width: 200px;
-  max-height: 200px;
+  width: 200px;
+  height: 200px;
   border-radius: 100000px;
+  background-attachment: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 @media (max-width: 640px) {
   .image {
@@ -108,7 +116,7 @@ If you have any questions or issues please reach out to the elections officer
 {{range (shuffle .Bios)}}
   <div class="bio">
     {{if ne .Image ""}}
-      <img class="image" src="{{.Image}}">
+    <a href="{{.Image}}" target="_blank" class="image" style="background-image: url({{.Image}})"></a>
     {{end}}
     <h3 id="{{slug .Name}}">{{.Name}}</h3>
     <p>Running for:
