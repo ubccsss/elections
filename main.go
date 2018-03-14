@@ -188,19 +188,7 @@ func slugify(s string) string {
 	return slug.Make(s)
 }
 
-func main() {
-	log.SetOutput(os.Stderr)
-
-	mrand.Seed(time.Now().UnixNano())
-	rawConfig, err := ioutil.ReadFile("config.yml")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	if err := yaml.Unmarshal(rawConfig, &c); err != nil {
-		log.Fatal(err)
-	}
-
+func setup() (*http.ServeMux, error) {
 	positions := map[string][]string{}
 	for _, p := range c.Positions {
 		for _, c := range p.Candidates {
@@ -228,7 +216,7 @@ func main() {
 	if *migrate {
 		db.AutoMigrate(&Voter{})
 		db.AutoMigrate(&Vote{})
-		return
+		return nil, nil
 	}
 
 	tmpl := template.New("")
@@ -547,6 +535,31 @@ func main() {
 			User:   user,
 		})
 	}))
+
+	return mux, nil
+}
+
+func main() {
+	log.SetOutput(os.Stderr)
+
+	mrand.Seed(time.Now().UnixNano())
+
+	rawConfig, err := ioutil.ReadFile("config.yml")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := yaml.Unmarshal(rawConfig, &c); err != nil {
+		log.Fatal(err)
+	}
+
+	mux, err := setup()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if mux == nil {
+		return
+	}
 
 	if err := cgi.Serve(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		bits := strings.Split(r.URL.Path, "elections.cgi")
