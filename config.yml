@@ -7,6 +7,7 @@ privatekey: "/home/q/q7w9a/.ssh/id_rsa"
 email: webmaster@ubccsss.org
 bios:
   - name: Tristan Rice
+    image: https://avatars1.githubusercontent.com/u/909104
     desc: |
       The current webmaster and elections officer.
 

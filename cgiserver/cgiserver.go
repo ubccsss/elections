@@ -12,9 +12,9 @@ import (
 func handleHTTP(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
-	log.Printf("%s - %s", r.Method, r.URL)
 	path := r.URL.Path
-	file := filepath.FromSlash(path)
+	file := filepath.FromSlash(path)[1:]
+	log.Printf("%s - %s", r.Method, file)
 
 	cgiPath := ""
 

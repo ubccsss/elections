@@ -160,6 +160,7 @@ type Vote struct {
 type Biography struct {
 	Name      string
 	Desc      string
+	Image     string
 	Positions []string
 }
 
@@ -188,6 +189,8 @@ func slugify(s string) string {
 }
 
 func main() {
+	log.SetOutput(os.Stderr)
+
 	mrand.Seed(time.Now().UnixNano())
 	rawConfig, err := ioutil.ReadFile("config.yml")
 	if err != nil {
@@ -555,6 +558,6 @@ func main() {
 		}
 		mux.ServeHTTP(w, r)
 	})); err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 }

@@ -13,6 +13,22 @@
 .csv:last-child:after {
   content: "";
 }
+.image {
+  float: right;
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 100000px;
+}
+@media (max-width: 640px) {
+  .image {
+    float: inherit;
+    margin: 0 auto;
+    display: block;
+  }
+}
+.bio {
+  overflow: hidden;
+}
 </style>
 
 <h1 class="page-header">CSSS Elections</h1>
@@ -90,14 +106,19 @@ If you have any questions or issues please reach out to the elections officer
 <h2>Biographies</h2>
 
 {{range (shuffle .Bios)}}
-  <h3 id="{{slug .Name}}">{{.Name}}</h3>
-  <p>Running for:
-    {{range .Positions}}
-      <a class="csv" href="#{{slug .}}">{{.}}</a>
+  <div class="bio">
+    {{if ne .Image ""}}
+      <img class="image" src="{{.Image}}">
     {{end}}
-  </p>
-  <div class="desc">
-    {{md .Desc}}
+    <h3 id="{{slug .Name}}">{{.Name}}</h3>
+    <p>Running for:
+      {{range .Positions}}
+        <a class="csv" href="#{{slug .}}">{{.}}</a>
+      {{end}}
+    </p>
+    <div class="desc">
+      {{md .Desc}}
+    </div>
   </div>
 {{end}}
 
