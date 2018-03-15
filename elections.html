@@ -37,6 +37,9 @@
 .bio {
   overflow: hidden;
 }
+.error {
+  color: red;
+}
 </style>
 
 <h1 class="page-header">CSSS Elections</h1>
@@ -49,6 +52,10 @@ If you have any questions or issues please reach out to the elections officer
 </p>
 
 <h2>Vote</h2>
+
+{{if .Voted}}
+<p class="error">You've already voted.</p>
+{{end}}
 
 <form method="POST" action="vote" method="post">
   <div class="form-group">

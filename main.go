@@ -571,12 +571,19 @@ func setup() (*server, error) {
 			return errors.New("voting is closed")
 		}
 
+		count := 0
+		if err := db.Model(&Voter{}).Where("username = ?", user).Count(&count).Error; err != nil {
+			return err
+		}
+
 		return tmpl.ExecuteTemplate(w, "elections.html", struct {
 			Config
-			User string
+			User  string
+			Voted bool
 		}{
 			Config: c,
 			User:   user,
+			Voted:  count > 0,
 		})
 	}))
 
