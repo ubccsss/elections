@@ -12,6 +12,7 @@ import (
 	"flag"
 	"fmt"
 	"html/template"
+	"io"
 	"io/ioutil"
 	"log"
 	mrand "math/rand"
@@ -93,19 +94,27 @@ func (w *TemplateWriter) Title(title string) {
 	w.title = title
 }
 
+func writeTemplate(w io.Writer, title string) ([]byte, error) {
+	body, err := ioutil.ReadFile("template.html")
+	if err != nil {
+		return nil, err
+	}
+
+	seq := []byte("%s")
+	body = bytes.Replace(body, seq, []byte(title), 1)
+
+	idx := bytes.Index(body, seq)
+	w.Write(body[:idx])
+	return body[idx+len(seq):], nil
+}
+
 func (w *TemplateWriter) Write(b []byte) (int, error) {
 	if !w.writtenHead {
-		body, err := ioutil.ReadFile("template.html")
+		var err error
+		w.footer, err = writeTemplate(w.ResponseWriter, w.title)
 		if err != nil {
 			return 0, err
 		}
-
-		seq := []byte("%s")
-		body = bytes.Replace(body, seq, []byte(w.title), 1)
-
-		idx := bytes.Index(body, seq)
-		w.ResponseWriter.Write(body[:idx])
-		w.footer = body[idx+len(seq):]
 		w.writtenHead = true
 	}
 
@@ -184,7 +193,10 @@ type Config struct {
 	Positions  []Position
 }
 
-var migrate = flag.Bool("migrate", false, "migrate the database")
+var (
+	migrate = flag.Bool("migrate", false, "migrate the database")
+	index   = flag.Bool("index", false, "generate index.html")
+)
 var c Config
 
 func slugify(s string) string {
@@ -304,6 +316,8 @@ func (s *server) Close() error {
 }
 
 func setup() (*server, error) {
+	flag.Parse()
+
 	positions := map[string][]string{}
 	for _, p := range c.Positions {
 		for _, c := range p.Candidates {
@@ -316,22 +330,6 @@ func setup() (*server, error) {
 
 	if len(c.DBPath) == 0 {
 		return nil, errors.Errorf("dbpath empty!")
-	}
-
-	// NOTE: this database has to be able to be opened and edited by multiple
-	// clients at the same time since this is a CGI based program and there may
-	// be n copies operating at the same time.
-	db, err := gorm.Open("sqlite3", c.DBPath)
-	if err != nil {
-		return nil, errors.Wrapf(err, "failed to connect to database")
-	}
-
-	flag.Parse()
-	if *migrate {
-		if err := runMigrate(db); err != nil {
-			return nil, err
-		}
-		return nil, nil
 	}
 
 	tmpl := template.New("")
@@ -383,9 +381,45 @@ func setup() (*server, error) {
 		},
 	})
 
-	tmpl, err = tmpl.ParseFiles("elections.html", "voted.html", "admin.html")
+	tmpl, err := tmpl.ParseGlob("templates/*")
 	if err != nil {
 		return nil, err
+	}
+
+	if *index {
+		f, err := os.OpenFile("index.html", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0755)
+		if err != nil {
+			return nil, err
+		}
+		defer f.Close()
+
+		footer, err := writeTemplate(f, "Elections")
+		if err != nil {
+			return nil, err
+		}
+		if err := tmpl.ExecuteTemplate(f, "index.html", nil); err != nil {
+			return nil, err
+		}
+		if _, err := f.Write(footer); err != nil {
+			return nil, err
+		}
+
+		return nil, nil
+	}
+
+	// NOTE: this database has to be able to be opened and edited by multiple
+	// clients at the same time since this is a CGI based program and there may
+	// be n copies operating at the same time.
+	db, err := gorm.Open("sqlite3", c.DBPath)
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to connect to database")
+	}
+
+	if *migrate {
+		if err := runMigrate(db); err != nil {
+			return nil, err
+		}
+		return nil, nil
 	}
 
 	mux := http.NewServeMux()
