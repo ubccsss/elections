@@ -136,6 +136,8 @@ func handleErr(f func(w *TemplateWriter, r *http.Request) error) http.HandlerFun
 				err.Error(),
 				c.Email, c.Email,
 			)
+
+			log.Printf("Error: %+v", err)
 		}
 	}
 }
@@ -188,7 +190,115 @@ func slugify(s string) string {
 	return slug.Make(s)
 }
 
-func setup() (*http.ServeMux, error) {
+func validateVoteForm(r *http.Request) (*Voter, map[string][]string, error) {
+	name := strings.TrimSpace(r.FormValue("name"))
+	if name == "" {
+		return nil, nil, errors.New("All fields are required. You need to specify your full name.")
+	}
+	sid := strings.TrimSpace(r.FormValue("student_number"))
+	if sid == "" {
+		return nil, nil, errors.New("All fields are required. Student number missing.")
+	}
+
+	type rank struct {
+		rank   int
+		choice string
+	}
+
+	positionChoices := map[string][]string{}
+
+	for _, position := range c.Positions {
+		val := r.FormValue(position.Name)
+		var ranks []rank
+		if val == "Abstain" {
+			continue
+		}
+		if val == "Reopen Nominations" {
+			ranks = append(ranks, rank{
+				rank:   0,
+				choice: val,
+			})
+		}
+		for _, candidate := range position.Candidates {
+			if candidate == val {
+				ranks = append(ranks, rank{
+					rank:   0,
+					choice: candidate,
+				})
+				continue
+			}
+			id := slugify(position.Name + "-" + candidate)
+			candidateVal := r.FormValue(id)
+			if candidateVal != "" {
+				r, err := strconv.Atoi(candidateVal)
+				if err != nil {
+					return nil, nil, err
+				}
+				ranks = append(ranks, rank{
+					rank:   r,
+					choice: candidate,
+				})
+			}
+		}
+		if len(ranks) == 0 {
+			return nil, nil, errors.Errorf("All fields are required. Invalid or missing position %q.", position.Name)
+		}
+
+		sort.Slice(ranks, func(i, j int) bool {
+			return ranks[i].rank < ranks[j].rank
+		})
+		var choices []string
+		for _, r := range ranks {
+			choices = append(choices, r.choice)
+		}
+		positionChoices[position.Name] = choices
+	}
+
+	user := os.Getenv("REMOTE_USER")
+	if len(user) == 0 {
+		return nil, nil, errors.New("missing REMOTE_USER")
+	}
+
+	sidsRaw, err := ioutil.ReadFile(c.StudentIDs)
+	if err != nil {
+		return nil, nil, err
+	}
+	sids := strings.Split(strings.TrimSpace(string(sidsRaw)), "\n")
+	found := false
+	for _, sid2 := range sids {
+		if sid == strings.TrimSpace(sid2) {
+			found = true
+			break
+		}
+	}
+	if !found {
+		return nil, nil, errors.Errorf("Invalid student number %q. Make sure you typed it in correctly and that you're a computer science student.", sid)
+	}
+
+	voter := &Voter{
+		Username:      user,
+		Name:          name,
+		StudentNumber: sid,
+	}
+	return voter, positionChoices, nil
+}
+
+func runMigrate(db *gorm.DB) error {
+	db.AutoMigrate(&Voter{})
+	db.AutoMigrate(&Vote{})
+	return nil
+}
+
+type server struct {
+	db  *gorm.DB
+	mux *http.ServeMux
+}
+
+func (s *server) Close() error {
+	return s.db.Close()
+}
+
+func setup() (*server, error) {
 	positions := map[string][]string{}
 	for _, p := range c.Positions {
 		for _, c := range p.Candidates {
@@ -200,7 +310,7 @@ func setup() (*http.ServeMux, error) {
 	}
 
 	if len(c.DBPath) == 0 {
-		log.Fatal("dbpath empty!")
+		return nil, errors.Errorf("dbpath empty!")
 	}
 
 	// NOTE: this database has to be able to be opened and edited by multiple
@@ -208,14 +318,14 @@ func setup() (*http.ServeMux, error) {
 	// be n copies operating at the same time.
 	db, err := gorm.Open("sqlite3", c.DBPath)
 	if err != nil {
-		log.Fatal("failed to connect database")
+		return nil, errors.Wrapf(err, "failed to connect to database")
 	}
-	defer db.Close()
 
 	flag.Parse()
 	if *migrate {
-		db.AutoMigrate(&Voter{})
-		db.AutoMigrate(&Vote{})
+		if err := runMigrate(db); err != nil {
+			return nil, err
+		}
 		return nil, nil
 	}
 
@@ -258,7 +368,7 @@ func setup() (*http.ServeMux, error) {
 
 	tmpl, err = tmpl.ParseFiles("elections.html", "voted.html", "admin.html")
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	mux := http.NewServeMux()
@@ -273,88 +383,9 @@ func setup() (*http.ServeMux, error) {
 			return err
 		}
 
-		name := strings.TrimSpace(r.FormValue("name"))
-		if name == "" {
-			return errors.New("All fields are required. You need to specify your full name.")
-		}
-		sid := strings.TrimSpace(r.FormValue("student_number"))
-		if sid == "" {
-			return errors.New("All fields are required. Student number missing.")
-		}
-
-		type rank struct {
-			rank   int
-			choice string
-		}
-
-		positionChoices := map[string][]string{}
-
-		for _, position := range c.Positions {
-			val := r.FormValue(position.Name)
-			var ranks []rank
-			if val == "Abstain" {
-				continue
-			}
-			if val == "Reopen Nominations" {
-				ranks = append(ranks, rank{
-					rank:   0,
-					choice: val,
-				})
-			}
-			for _, candidate := range position.Candidates {
-				if candidate == val {
-					ranks = append(ranks, rank{
-						rank:   0,
-						choice: candidate,
-					})
-					continue
-				}
-				id := slugify(position.Name + "-" + candidate)
-				candidateVal := r.FormValue(id)
-				if candidateVal != "" {
-					r, err := strconv.Atoi(candidateVal)
-					if err != nil {
-						return err
-					}
-					ranks = append(ranks, rank{
-						rank:   r,
-						choice: candidate,
-					})
-				}
-			}
-			if len(ranks) == 0 {
-				return errors.Errorf("All fields are required. Invalid or missing position %q.", position.Name)
-			}
-
-			sort.Slice(ranks, func(i, j int) bool {
-				return ranks[i].rank < ranks[j].rank
-			})
-			var choices []string
-			for _, r := range ranks {
-				choices = append(choices, r.choice)
-			}
-			positionChoices[position.Name] = choices
-		}
-
-		user := os.Getenv("REMOTE_USER")
-		if len(user) == 0 {
-			return errors.New("missing REMOTE_USER")
-		}
-
-		sidsRaw, err := ioutil.ReadFile(c.StudentIDs)
+		voter, positionChoices, err := validateVoteForm(r)
 		if err != nil {
 			return err
-		}
-		sids := strings.Split(strings.TrimSpace(string(sidsRaw)), "\n")
-		found := false
-		for _, sid2 := range sids {
-			if sid == strings.TrimSpace(sid2) {
-				found = true
-				break
-			}
-		}
-		if !found {
-			return errors.Errorf("Invalid student number %q. Make sure you typed it in correctly and that you're a computer science student.", sid)
 		}
 
 		// We've validated votes, now insert into database.
@@ -362,18 +393,14 @@ func setup() (*http.ServeMux, error) {
 		tx := db.Begin()
 
 		count := 0
-		if err := tx.Model(&Voter{}).Where("username = ? or student_number = ?", user, sid).Count(&count).Error; err != nil {
+		if err := tx.Model(&Voter{}).Where("username = ? or student_number = ?", voter.Username, voter.StudentNumber).Count(&count).Error; err != nil {
 			return err
 		}
 		if count >= 1 {
 			return errors.Errorf("This user name or student number has already voted.")
 		}
 
-		if err := tx.Create(&Voter{
-			Username:      user,
-			Name:          name,
-			StudentNumber: sid,
-		}).Error; err != nil {
+		if err := tx.Create(&voter).Error; err != nil {
 			return err
 		}
 
@@ -396,7 +423,7 @@ func setup() (*http.ServeMux, error) {
 
 		// Generate cryptographic receipt for votes.
 		var body bytes.Buffer
-		fmt.Fprintf(&body, "User: %s\n", user)
+		fmt.Fprintf(&body, "User: %+v\n", voter)
 		fmt.Fprintf(&body, "Time: %s\n", time.Now().String())
 		for k, v := range r.Form {
 			fmt.Fprintf(&body, "- %s: %+v\n", k, v)
@@ -536,7 +563,10 @@ func setup() (*http.ServeMux, error) {
 		})
 	}))
 
-	return mux, nil
+	return &server{
+		mux: mux,
+		db:  db,
+	}, nil
 }
 
 func main() {
@@ -553,13 +583,15 @@ func main() {
 		log.Fatal(err)
 	}
 
-	mux, err := setup()
+	server, err := setup()
 	if err != nil {
 		log.Fatal(err)
 	}
-	if mux == nil {
+
+	if server == nil {
 		return
 	}
+	defer server.Close()
 
 	if err := cgi.Serve(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		bits := strings.Split(r.URL.Path, "elections.cgi")
@@ -569,7 +601,7 @@ func main() {
 				r.URL.Path = "/"
 			}
 		}
-		mux.ServeHTTP(w, r)
+		server.mux.ServeHTTP(w, r)
 	})); err != nil {
 		log.Println(err)
 	}
