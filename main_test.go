@@ -88,6 +88,15 @@ func setupTest(t *testing.T) (*server, func()) {
 				"Candidate 5",
 			},
 		},
+		{
+			Name: "Position 5",
+			Desc: "Desc",
+			Candidates: []string{
+				"Candidate 6",
+				"Candidate 7",
+				"Candidate 8",
+			},
+		},
 	}
 
 	os.Setenv("REMOTE_USER", "test")
@@ -167,6 +176,8 @@ func TestVote(t *testing.T) {
 		req.Form.Add("Position 2", "Candidate 3")
 		req.Form.Add("Position 3", "Abstain")
 		req.Form.Add("Position 4", "Reopen Nominations")
+		req.Form.Add(slugify("Position 5-Candidate 7"), "1")
+		req.Form.Add(slugify("Position 5-Candidate 6"), "2")
 
 		resp := httptest.NewRecorder()
 		s.mux.ServeHTTP(resp, req)
@@ -221,6 +232,10 @@ func TestVote(t *testing.T) {
 		{
 			Position:  "Position 4",
 			Candidate: `["Reopen Nominations"]`,
+		},
+		{
+			Position:  "Position 5",
+			Candidate: `["Candidate 7","Candidate 6"]`,
 		},
 	}
 
