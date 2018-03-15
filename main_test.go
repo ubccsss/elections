@@ -14,6 +14,8 @@ import (
 	"reflect"
 	"sort"
 	"testing"
+
+	"github.com/Sam-Izdat/govote"
 )
 
 func setupTest(t *testing.T) (*server, func()) {
@@ -249,5 +251,25 @@ func TestVote(t *testing.T) {
 		if !reflect.DeepEqual(voteWant, voteGot) {
 			t.Errorf("%d. %+v != %+v", i, voteWant, voteGot)
 		}
+	}
+}
+
+func TestIRV(t *testing.T) {
+	poll, err := govote.InstantRunoff.New([]string{"1", "2", "3"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	poll.AddBallot([]string{"1", "2"})
+	poll.AddBallot([]string{"2", "3"})
+	poll.AddBallot([]string{"1", "3"})
+
+	winners, _, err := poll.Evaluate()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	want := []string{"1"}
+	if !reflect.DeepEqual(want, winners) {
+		t.Fatalf("got winners = %+v; wanted %+v", winners, want)
 	}
 }
