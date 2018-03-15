@@ -1,6 +1,6 @@
 .PHONY: test
 test: elections.cgi
-	go test -v .
+	go test .
 
 elections.cgi: main.go
 	go build -v -o elections.cgi .

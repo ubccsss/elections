@@ -25,6 +25,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/Sam-Izdat/govote"
 	"github.com/gosimple/slug"
 	"github.com/jinzhu/gorm"
@@ -208,6 +209,10 @@ func validateVoteForm(r *http.Request) (*Voter, map[string][]string, error) {
 	positionChoices := map[string][]string{}
 
 	for _, position := range c.Positions {
+		if len(position.Candidates) == 0 {
+			continue
+		}
+
 		val := r.FormValue(position.Name)
 		var ranks []rank
 		if val == "Abstain" {
@@ -345,9 +350,21 @@ func setup() (*server, error) {
 			return strings.Join(a, "")
 		},
 		"slug": slugify,
-		"md": func(s string) template.HTML {
+		"md": func(s string) interface{} {
 			unsafe := blackfriday.Run([]byte(s))
-			return template.HTML(string(bluemonday.UGCPolicy().SanitizeBytes(unsafe)))
+			sanitized := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
+			doc, err := goquery.NewDocumentFromReader(bytes.NewReader(sanitized))
+			if err != nil {
+				return errors.Wrapf(err, "md: %q", s)
+			}
+			doc.Find("a[href]").Each(func(i int, s *goquery.Selection) {
+				s.SetAttr("target", "_blank")
+			})
+			html, err := goquery.OuterHtml(doc.Selection)
+			if err != nil {
+				return errors.Wrapf(err, "md: %q", s)
+			}
+			return template.HTML(html)
 		},
 		"seq": func(n int) []int {
 			var nums []int

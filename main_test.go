@@ -99,6 +99,11 @@ func setupTest(t *testing.T) (*server, func()) {
 				"Candidate 8",
 			},
 		},
+		{
+			Name:       "Position 6",
+			Desc:       "Desc",
+			Candidates: []string{},
+		},
 	}
 
 	os.Setenv("REMOTE_USER", "test")

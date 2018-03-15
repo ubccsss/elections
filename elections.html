@@ -71,38 +71,42 @@ If you have any questions or issues please reach out to the elections officer
 
     {{$numCandidates := len .Candidates}}
 
-    {{range (shuffle .Candidates)}}
-      <div>
-        {{$id := slug (concat $name "-" .)}}
+    {{if eq $numCandidates 0}}
+      <p>No candidates are running for this position.</p>
+    {{else}}
+      {{range (shuffle .Candidates)}}
+        <div>
+          {{$id := slug (concat $name "-" .)}}
 
-        {{if le $numCandidates 1}}
-          <input id="{{$id}}" name="{{$name}}" type="radio" value="{{.}}" group="{{$name}}">
-        {{else}}
-          <select id="{{$id}}" name="{{$id}}" group="{{$name}}">
-            <option value="">--</option>
-            {{range (seq $numCandidates)}}
-              <option value="{{.}}">{{.}}</option>
-            {{end}}
-          </select>
-        {{end}}
-        <label for="{{$id}}">{{.}}</label>
-        {{if hasBio .}}
-        <a href="#{{slug .}}">Biography</a>
-        {{end}}
+          {{if le $numCandidates 1}}
+            <input id="{{$id}}" name="{{$name}}" type="radio" value="{{.}}" group="{{$name}}">
+          {{else}}
+            <select id="{{$id}}" name="{{$id}}" group="{{$name}}">
+              <option value="">--</option>
+              {{range (seq $numCandidates)}}
+                <option value="{{.}}">{{.}}</option>
+              {{end}}
+            </select>
+          {{end}}
+          <label for="{{$id}}">{{.}}</label>
+          {{if hasBio .}}
+          <a href="#{{slug .}}">Biography</a>
+          {{end}}
+        </div>
+      {{end}}
+
+      <div>
+        {{$id := slug (concat $name "-reopen")}}
+        <input id="{{$id}}" name="{{$name}}" type="radio" value="Reopen Nominations" group="{{$name}}">
+        <label for="{{$id}}">Reopen Nominations</label>
+      </div>
+
+      <div>
+        {{$id := slug (concat $name "-abstain")}}
+        <input id="{{$id}}" name="{{$name}}" type="radio" value="Abstain" group="{{$name}}">
+        <label for="{{$id}}">Abstain</label>
       </div>
     {{end}}
-
-    <div>
-      {{$id := slug (concat $name "-reopen")}}
-      <input id="{{$id}}" name="{{$name}}" type="radio" value="Reopen Nominations" group="{{$name}}">
-      <label for="{{$id}}">Reopen Nominations</label>
-    </div>
-
-    <div>
-      {{$id := slug (concat $name "-abstain")}}
-      <input id="{{$id}}" name="{{$name}}" type="radio" value="Abstain" group="{{$name}}">
-      <label for="{{$id}}">Abstain</label>
-    </div>
   {{end}}
 
   <br>
