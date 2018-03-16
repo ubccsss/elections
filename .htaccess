@@ -6,4 +6,3 @@ AuthLDAPURL "ldap://ldap.cs.ubc.ca:389/ou=People,dc=cs,dc=ubc,dc=ca?uid"
 <Files "elections.cgi">
   Require valid-user
 </Files>
-

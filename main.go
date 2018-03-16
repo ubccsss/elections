@@ -266,7 +266,10 @@ func validateVoteForm(r *http.Request) (*Voter, map[string][]string, error) {
 			return ranks[i].rank < ranks[j].rank
 		})
 		var choices []string
-		for _, r := range ranks {
+		for i, r := range ranks {
+			if i > 0 && ranks[i-1].rank == r.rank {
+				return nil, nil, errors.Errorf("ranks must be unique: %s duplicate rank %d", position.Name, r.rank)
+			}
 			choices = append(choices, r.choice)
 		}
 		positionChoices[position.Name] = choices

@@ -184,16 +184,7 @@ func TestVote(t *testing.T) {
 
 	{
 		req := httptest.NewRequest("POST", "/vote", nil)
-		req.Form = url.Values{}
-		req.Form.Add("name", "Voter")
-		req.Form.Add("student_number", "12345678")
-		req.Form.Add(slugify("Position 1-Candidate 2"), "1")
-		req.Form.Add("Position 2", "Candidate 3")
-		req.Form.Add("Position 3", "Abstain")
-		req.Form.Add("Position 4", "Reopen Nominations")
-		req.Form.Add("Position 7", "Reopen Nominations")
-		req.Form.Add(slugify("Position 5-Candidate 7"), "1")
-		req.Form.Add(slugify("Position 5-Candidate 6"), "2")
+		req.Form = goodForm()
 
 		resp := httptest.NewRecorder()
 		s.mux.ServeHTTP(resp, req)
@@ -268,6 +259,46 @@ func TestVote(t *testing.T) {
 
 		if !reflect.DeepEqual(voteWant, voteGot) {
 			t.Errorf("%d. %+v != %+v", i, voteWant, voteGot)
+		}
+	}
+}
+
+func goodForm() url.Values {
+	values := url.Values{}
+	values.Add("name", "Voter")
+	values.Add("student_number", "12345678")
+	values.Add(slugify("Position 1-Candidate 2"), "1")
+	values.Add("Position 2", "Candidate 3")
+	values.Add("Position 3", "Abstain")
+	values.Add("Position 4", "Reopen Nominations")
+	values.Add("Position 7", "Reopen Nominations")
+	values.Add(slugify("Position 5-Candidate 7"), "1")
+	values.Add(slugify("Position 5-Candidate 6"), "2")
+	return values
+}
+
+func TestVoteDuplicateRank(t *testing.T) {
+	s, cleanup := setupTest(t)
+	defer cleanup()
+
+	{
+		req := httptest.NewRequest("POST", "/vote", nil)
+		resp := httptest.NewRecorder()
+		s.mux.ServeHTTP(resp, req)
+		if resp.Code != http.StatusInternalServerError {
+			t.Fatalf("expected StatusInternalServerError")
+		}
+	}
+
+	{
+		req := httptest.NewRequest("POST", "/vote", nil)
+		req.Form = goodForm()
+		req.Form.Set(slugify("Position 5-Candidate 6"), "1")
+
+		resp := httptest.NewRecorder()
+		s.mux.ServeHTTP(resp, req)
+		if resp.Code != http.StatusInternalServerError {
+			t.Fatalf("expected StatusInternalServerError; got %s", resp.Body.Bytes())
 		}
 	}
 }
