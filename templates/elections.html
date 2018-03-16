@@ -16,16 +16,17 @@
 .image {
   margin-top: 20px;
   margin-bottom: 10px;
+  margin-left: 10px;
   display: inline-block;
   float: right;
   width: 200px;
   height: 200px;
   border-radius: 100000px;
-  background-attachment: center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-position: center center;
 }
 @media (max-width: 640px) {
   .image {
@@ -36,9 +37,13 @@
 }
 .bio {
   overflow: hidden;
+    margin: 10px 0;
 }
 .error {
   color: red;
+}
+.bio ul, .bio ol {
+  padding-left: 30px;
 }
 </style>
 

@@ -1,51 +1,182 @@
 dbpath: /home/q/q7w9a/elections.db
-open: true
+open: false
 admins:
   - q7w9a
 studentids: "/home/q/q7w9a/sids.txt"
 privatekey: "/home/q/q7w9a/.ssh/id_rsa"
 email: webmaster@ubccsss.org
 bios:
-  - name: Tristan Rice
-    image: https://avatars1.githubusercontent.com/u/909104
+  - name: Lydia Zheng
     desc: |
-      The current webmaster and elections officer.
+      As the current Vice President Admin of the CSSS, I would like to take up
+      the role of Vice President Finance for the 2018 / 2019 school year, so
+      that I may establish a consistent record of the club’s financial
+      statements and responsibly manage our usage of funds towards benefitting
+      all CS students. Thank you for your consideration!
 
-      Yes, I am Tristan.
-  - name: Megan
-    desc: I will be a very good VPI, yes.
-  - name: Jill
-    image: https://i.pinimg.com/236x/de/4d/af/de4daf20b7e43fc4bca3450d86a1a32c--backpack-coding.jpg
+  - name: Tiger Oakes
+    image: https://i.imgur.com/nBusQGE.jpg
     desc: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis
-      tincidunt lorem. Suspendisse orci urna, tincidunt non porttitor et,
-      euismod nec ipsum. Vestibulum ac sagittis nisl. Ut ut ipsum et libero
-      ultrices laoreet in porttitor purus. Aliquam sodales porttitor augue, id
-      mollis eros lacinia vitae. Aliquam rutrum orci sit amet bibendum sagittis.
-      Vivamus eu malesuada est. Quisque eget sagittis arcu. Nullam egestas
-      consectetur risus. Sed id cursus massa. Maecenas bibendum ornare aliquet.
-      Interdum et malesuada fames ac ante ipsum primis in faucibus.
+      Hi everyone! As a VP Communications executive, my plan is to make it easy
+      for both passerby and fanatic Smash players to know what's happening at
+      the Cube.
 
-      Duis condimentum varius consequat. Nunc ut nibh id erat sagittis volutpat
-      eget eu ante. Aliquam nec aliquam nibh. Proin vitae risus ac velit maximus
-      dapibus nec at quam. Maecenas consectetur, urna eu tincidunt aliquam,
-      risus tellus aliquet metus, in scelerisque massa nunc sit amet est.
-      Curabitur mattis nec sem egestas maximus. Phasellus malesuada augue sit
-      amet tellus interdum, at lobortis lorem imperdiet. Curabitur ornare quam
-      mattis massa tincidunt volutpat. Sed aliquam nec ex ac vehicula. Donec
-      lacus nisl, ornare vitae dolor id, vestibulum venenatis ex. Proin
-      scelerisque arcu at diam sodales placerat. Donec aliquet ligula turpis,
-      non semper ante fermentum vel. In tincidunt sodales enim condimentum
-      porta.
+      I'm a 3rd year CS student from Hawai'i. Some of you may have seen me at
+      the Cube, and I sometimes bring my Nintendo Switch for everyone to use.
 
-      Fusce in dui vitae magna semper ultrices. Aenean commodo tortor at mi
-      sagittis vehicula. Mauris facilisis felis non purus vehicula consectetur
-      sed id ante. Maecenas dignissim ipsum lectus, ac condimentum tortor
-      malesuada id. Suspendisse urna arcu, iaculis non dolor quis, lacinia
-      viverra ante. In hac habitasse platea dictumst. Nunc venenatis nulla
-      nulla, vitae facilisis neque ullamcorper in. Nam iaculis tellus vitae.
+      Here's some things I've done in the past:
 
+      - 🎬 Ran a [promotional campaign](https://imgur.com/fDSgZRT) for a Hawai'i bus app
+      - 🚌 Put together [GIFs to demo projects](https://github.com/NotWoods/unity-polygon-2d-editor)
+      - 🎄 Stayed up late during holidays making [animated christmas e-cards](https://github.com/omlhawaii/christmas-cards/tree/master/2016) for my family's business
 
+  - name: Natalie Chen
+    image: https://i.imgur.com/xLGFP5P.png
+    desc: |
+      Hello lovely CS students! My name is Natalie Chen, and I'll be running for
+      Vice-President Internal here at CSSS. I am a third year Computer Science
+      student (like many of you!) and would love to have your vote for the
+      upcoming elections. For the past few years the CSSS has become like a big
+      family to me, especially frequents at the Cube--my home away from home. In
+      the future, I would like to help the CSSS continue giving others to have a
+      place to feel welcome on campus. I will bring in my experiences and ideas
+      from Red Cross and numerous customer service related work places to
+      further better the Cube. Should you have any questions please feel free to
+      contact me!
+
+      My email is: <nataliechen1024@alumni.ubc.ca>
+
+  - name: Emmanuel Sales
+    image: https://i.imgur.com/ODqLX44.jpg
+    desc: |
+      Hi, I'm Emmanuel, but some of you might know me as Em. I was introduced to
+      the CSSS when I started to hang out in the Cube as a first year looking
+      for a place to belong. I can happily say that in the CSSS I found a
+      community that I can call family and a place that I can call home! My
+      greatest joy has been to extend this welcoming spirit to the UBC CS
+      community at large - as an officer last year and as VP Finance this year,
+      I hope I've been able to make a positive difference for your experience on
+      campus, whether it was by helping organize an event or by welcoming you to
+      the Cube.
+
+      As President, my primary goal would be to make *every* CS student feel
+      like they have a community they can call their own. That means introducing
+      new initiatives and events so that the CSSS will be able to better foster
+      your interests, and taking more input from your suggestions from all of
+      our platforms. From project showcases to technical talks and workshops to
+      free coffee weeks to expanding our board game collection, it should be the
+      club's mission to continually find new ways to improve its ability to
+      serve the community.
+
+      I would be honoured to have your trust to lead this effort. With the
+      experience I've garnered over the years, I believe that I will be able to
+      make this happen for you.
+
+      Thank you very much!
+
+  - name: Ethan Yeung
+    image: https://i.imgur.com/asxHHcB.jpg
+    desc: |
+      My name is Ethan Yeung, and I am running for the position of VP Admin. If
+      you want a flunky to take notes or fetch coffee for you, that’d be me.
+      With regards to the formal responsibilities of the VP admin position, I
+      have previous experience with taking transcripts and minutes, engaging
+      with academic administration, and acting as a student-admin go-between. As
+      for to my motivation, I just want a room key for the Cube so I can avoid
+      having to leave. I spend most of my free time there, and I can be found
+      reliably if, for some reason, you need something from me.
+
+  - name: Michael Chern
+    image: https://i.imgur.com/GMAY1X8.png
+    desc: |
+      Hello fellow Computer Science students!
+
+      My name is Michael Chern, a 3rd-year computer science student. I will be
+      running for Vice-President: Administration of the CSSS. I’ve had previous
+      experience managing and organizing as president of my high-school social
+      club and I believe I can use my skills to contribute and build the CSSS
+      such that it benefits you; the students more than it does now.
+
+      If elected as Vice President: Administration, I will:
+
+      - Motivate and organize executive meetings to ensure maximum efficiency
+
+      - Organize meetings in a way such that all important topics are covered
+
+      - Ensure everyone within the organization has an equal voice
+
+      - Streamline efficiency of the exec group as a whole so that the CSSS can
+        function at its best
+
+  - name: Chanbin Lee
+    image: https://i.imgur.com/vax4KRO.png
+    desc: |
+      Hello!
+
+      My name is Chanbin, a first-year hoping to major in Computer Science.
+
+      I currently hold a position at the CSSS as an Internal Officer, and have
+      gained an interest in community involvement and participation throughout
+      the time I have been involved here.
+
+      As a Vice President Volunteering, I hope to encourage more people into
+      becoming a part of the team, allow others to get more involved in
+      community activities, and to help everyone have a great year! :)
+
+  - name: Jonathan Budiardjo
+    image: https://i.imgur.com/Hthvsme.jpg
+    desc: |
+      #### Hello fellow computers!
+
+      My name is Jonathan Budiardjo. Some might know me as the CPSC121 Head TA,
+      the guy always at the Cube, or as the current Vice President Internal
+      (VPI) of the CSSS. I hope to use the leadership and organizational skills
+      that I’ve gained from my prior experiences to move CSSS forward.
+
+      From my term working as VPI of CSSS, I have gained the opportunity to
+      understand and work closely with its inner structure, and also been able
+      to familiarize myself with presidential duties and daily club operations.
+
+      If I am elected to be the President of the CSSS, I will:
+
+      - Maintain the transparency of CSSS activities
+      - Incorporate more community suggestions and feedback
+      - Increase in outgoing communication by actively communicating through social media
+      - Be a dependable friend and leader
+
+      The CSSS has become a large part of my daily routine and undergraduate
+      experience and I have enjoyed being part of the community to the point
+      where it is like a second home for me. I hope to use this opportunity to
+      give back by providing a memorable experience to other students.
+
+  - name: Jack Spalding-Jamieson
+    image: https://i.imgur.com/FD4Lcs6.png
+    desc: |
+      Just in case my name is too large for the form - it's Jack Spalding-Jamieson.
+
+      I've worked under the 2017-2018 VP Internal as an officer for this last
+      year and have learned the duties of this role thoroughly. The VP Internal
+      primarily works on the operations inside the lounge. I have some particular
+      hopes for this next year:
+
+      - Right now we stock the cube with a variety of items including soft drinks, bottled water, instant ramen, lasanga, pizza pops, and candy bars (and we sell with often pennies of overhead). These are quite popular, so they will probably stay, although I hope to add some new items too - some possibilities are milk & cereal and bread & jam, but I will open a survey.
+      - I am familiar with (and hope to automate) the locker rentals.
+      - I know how to acquire new printer cartridges.
+      - This year we replaced two couches (one with a standing desk), a microwave, and the credit card tablet. I hope we don't have to replace large items again but I will make sure it happens promptly if we do.
+      - A new smash bros has been announced for this year. Given the number of people this attracts to the lounge alone this is certainly a priority if it releases on time.
+      - I'm also hoping we can organize some coordinated events with the SFU CSSS - regardless of the rivalry, they are a fun group of people. Maybe we could sign a peace treaty if things go well.
+
+  - name: Ray Zhang
+    image: https://i.imgur.com/cWBiv50.png
+    desc: |
+      Ray Zhang.
+      That guy you see doing physics in the comp sci clubroom ~~because combined majors make sense~~.
+
+      *Not this term though because I'm away on co-op.*
+
+      I've been with the CSSS since the start of my first year, and have served as an internal officer for the majority of the time since.
+      I intend to take on a greater role serving the Cube next year, by maintaining the fiscal integrity of the Cube in the position of VPF.
+      I have a full year's worth of experience as treasurer for another club under the AMS, and I even have my own duct tape to hold everything together!
 
 positions:
   - name: President
@@ -63,8 +194,8 @@ positions:
       * Act as chief spokesperson on behalf of the Club.
 
     candidates:
-      - Tristan Rice
-      - Bob
+      - Emmanuel Sales
+      - Jonathan Budiardjo
 
   - name: Vice President, Volunteering
     desc: |
@@ -74,7 +205,7 @@ positions:
       * Organize the recruitment of undergraduate students in the Department into other volunteer positions.
 
     candidates:
-      - Bob
+      - Chanbin Lee
 
   - name: Vice President, Internal
     desc: |
@@ -87,9 +218,8 @@ positions:
       * Chair executive meetings in the absence of the president.
 
     candidates:
-      - Jill
-      - Jennifer
-      - Megan
+      - Jack Spalding-Jamieson
+      - Natalie Chen
 
   - name: Vice President, External
     desc: |
@@ -106,7 +236,7 @@ positions:
       * Be responsible for the planning, cost estimation, and execution of social and sporting events undertaken by the Club.
 
     candidates:
-      - Megan
+      - William Walcher
 
   - name: Vice President, Communications
     desc: |
@@ -114,6 +244,9 @@ positions:
 
       * Produce all advertising pertaining to Club business in all electronic and print media.
       * Communicate Club activities to the Members.
+
+    candidates:
+      - Tiger Oakes
 
   - name: Vice President, Finance
     desc: |
@@ -126,6 +259,10 @@ positions:
       * Be responsible for the purchase and sale of any of the Club’s merchandise.
       * Assist other officers in their interactions with the Alma Mater Society or any of its Commissions, if needed.
 
+    candidates:
+      - Ray Zhang
+      - Lydia Zheng
+
   - name: Vice President, Administration
     desc: |
       Responsibilities:
@@ -133,3 +270,7 @@ positions:
       * Take minutes at all General and Executive meetings; these minutes shall be published.
       * Organize meetings, when needed.
       * Direct communications between Executives, as required.
+
+    candidates:
+      - Ethan Yeung
+      - Michael Chern

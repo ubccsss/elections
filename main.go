@@ -315,6 +315,15 @@ func (s *server) Close() error {
 	return s.db.Close()
 }
 
+func isAdmin(user string) bool {
+	for _, admin := range c.Admins {
+		if admin == user {
+			return true
+		}
+	}
+	return false
+}
+
 func setup() (*server, error) {
 	flag.Parse()
 
@@ -522,15 +531,7 @@ func setup() (*server, error) {
 
 		w.Title("Admin")
 
-		found := false
-		for _, admin := range c.Admins {
-			if admin == user {
-				found = true
-				break
-			}
-		}
-
-		if !found {
+		if !isAdmin(user) {
 			return errors.New("must be an admin")
 		}
 
@@ -601,7 +602,7 @@ func setup() (*server, error) {
 
 		w.Title("Elections")
 
-		if !c.Open {
+		if !c.Open && !isAdmin(user) {
 			return errors.New("voting is closed")
 		}
 
