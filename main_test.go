@@ -104,6 +104,14 @@ func setupTest(t *testing.T) (*server, func()) {
 			Desc:       "Desc",
 			Candidates: []string{},
 		},
+		{
+			Name: "Position 7",
+			Desc: "Desc",
+			Candidates: []string{
+				"Candidate 1",
+				"Candidate 2",
+			},
+		},
 	}
 
 	os.Setenv("REMOTE_USER", "test")
@@ -183,6 +191,7 @@ func TestVote(t *testing.T) {
 		req.Form.Add("Position 2", "Candidate 3")
 		req.Form.Add("Position 3", "Abstain")
 		req.Form.Add("Position 4", "Reopen Nominations")
+		req.Form.Add("Position 7", "Reopen Nominations")
 		req.Form.Add(slugify("Position 5-Candidate 7"), "1")
 		req.Form.Add(slugify("Position 5-Candidate 6"), "2")
 
@@ -243,6 +252,10 @@ func TestVote(t *testing.T) {
 		{
 			Position:  "Position 5",
 			Candidate: `["Candidate 7","Candidate 6"]`,
+		},
+		{
+			Position:  "Position 7",
+			Candidate: `["Reopen Nominations"]`,
 		},
 	}
 
