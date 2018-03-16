@@ -42,7 +42,7 @@
 .error {
   color: red;
 }
-.bio ul, .bio ol {
+section ul, section ol {
   padding-left: 30px;
 }
 </style>
@@ -86,6 +86,14 @@ If you have any questions or issues please reach out to the elections officer
     {{if eq $numCandidates 0}}
       <p>No candidates are running for this position.</p>
     {{else}}
+      {{if gt $numCandidates 1}}
+      <p>
+      Please rank the candidates below where 1 is the most preferred. Winner is
+      decided using
+      <a href="https://en.wikipedia.org/wiki/Instant-runoff_voting" target="_blank">instant-runoff voting</a>.
+      </p>
+      {{end}}
+
       {{range (shuffle .Candidates)}}
         <div>
           {{$id := slug (concat $name "-" .)}}
@@ -130,11 +138,11 @@ If you have any questions or issues please reach out to the elections officer
 <h2>Biographies</h2>
 
 {{range (shuffle .Bios)}}
-  <div class="bio">
+  <div class="bio" id="{{slug .Name}}">
     {{if ne .Image ""}}
     <a href="{{.Image}}" target="_blank" class="image" style="background-image: url({{.Image}})"></a>
     {{end}}
-    <h3 id="{{slug .Name}}">{{.Name}}</h3>
+    <h3>{{.Name}}</h3>
     <p>Running for:
       {{range .Positions}}
         <a class="csv" href="#{{slug .}}">{{.}}</a>

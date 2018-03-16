@@ -1,5 +1,5 @@
 dbpath: /home/q/q7w9a/elections.db
-open: false
+open: true
 admins:
   - q7w9a
 studentids: "/home/q/q7w9a/sids.txt"
@@ -177,6 +177,27 @@ bios:
       I've been with the CSSS since the start of my first year, and have served as an internal officer for the majority of the time since.
       I intend to take on a greater role serving the Cube next year, by maintaining the fiscal integrity of the Cube in the position of VPF.
       I have a full year's worth of experience as treasurer for another club under the AMS, and I even have my own duct tape to hold everything together!
+
+  - name: William Walcher
+    image: https://i.imgur.com/NLcgfbC.jpg
+    desc: |
+      Hi there! I'm William, a first-year, going on second-year student who
+      loves CS!
+
+      I've organized hackathons and other events in the past, so I'm no stranger
+      to event organization and coordination.
+
+      This year I functioned as one of the two CSSS first year representatives,
+      where I reached out to other first year students with the aim of
+      connecting them to each other and creating a community within CS. Notably,
+      I organized the first ever CSSS escape room event which turned out to be a
+      widely enjoyed event.
+
+      As your social officer I would strive to continue to put my skills of
+      outreach, event organization, and community building to good use. You can
+      expect to run into more exciting, new events like the escape room if you
+      vote for me as your social officer!
+
 
 positions:
   - name: President
