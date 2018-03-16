@@ -4,6 +4,7 @@ admins:
   - q7w9a
 studentids: "/home/q/q7w9a/sids.txt"
 privatekey: "/home/q/q7w9a/.ssh/id_rsa"
+log: "/home/q/q7w9a/elections.log"
 email: webmaster@ubccsss.org
 bios:
   - name: Lydia Zheng
@@ -26,8 +27,8 @@ bios:
 
       Here's some things I've done in the past:
 
-      - 🎬 Ran a [promotional campaign](https://imgur.com/fDSgZRT) for a Hawai'i bus app
-      - 🚌 Put together [GIFs to demo projects](https://github.com/NotWoods/unity-polygon-2d-editor)
+      - 🚌 Ran a [promotional campaign](https://imgur.com/fDSgZRT) for a Hawai'i bus app
+      - 🎬 Put together [GIFs to demo projects](https://github.com/NotWoods/unity-polygon-2d-editor)
       - 🎄 Stayed up late during holidays making [animated christmas e-cards](https://github.com/omlhawaii/christmas-cards/tree/master/2016) for my family's business
 
   - name: Natalie Chen

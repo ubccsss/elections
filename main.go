@@ -184,6 +184,7 @@ type Position struct {
 
 type Config struct {
 	Open       bool
+	Log        string
 	Admins     []string
 	DBPath     string
 	Email      string
@@ -629,7 +630,6 @@ func setup() (*server, error) {
 }
 
 func main() {
-	log.SetOutput(os.Stderr)
 
 	mrand.Seed(time.Now().UnixNano())
 
@@ -641,6 +641,21 @@ func main() {
 	if err := yaml.Unmarshal(rawConfig, &c); err != nil {
 		log.Fatal(err)
 	}
+
+	writer := io.Writer(os.Stderr)
+
+	if len(c.Log) > 0 {
+		logfile, err := os.OpenFile(c.Log, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+		if err != nil {
+			log.Println(err)
+		} else {
+			defer logfile.Close()
+
+			writer = io.MultiWriter(writer, logfile)
+		}
+	}
+
+	log.SetOutput(writer)
 
 	server, err := setup()
 	if err != nil {
@@ -660,6 +675,7 @@ func main() {
 				r.URL.Path = "/"
 			}
 		}
+		log.Printf("%s %s", r.Method, r.URL.Path)
 		server.mux.ServeHTTP(w, r)
 	})); err != nil {
 		log.Println(err)
