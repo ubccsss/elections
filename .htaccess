@@ -1,8 +1,7 @@
 SSLRequireSSL
 AuthType Basic
 AuthName "CSSS Elections"
-AuthBasicProvider ldap
-AuthLDAPURL "ldap://ldap.cs.ubc.ca:389/ou=People,dc=cs,dc=ubc,dc=ca?uid"
+AuthBasicProvider ldap-domain
 <Files "elections.cgi">
   Require valid-user
 </Files>
