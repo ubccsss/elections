@@ -121,8 +121,8 @@ positions:
 
       * Be responsible for the planning, cost estimation, and execution of social and sporting events undertaken by the Club.
 
-    candidates:
-      - 
+    # candidates:
+    #   - 
 
   - name: Vice President, Communications
     desc: |
@@ -131,8 +131,8 @@ positions:
       * Produce all advertising pertaining to Club business in all electronic and print media.
       * Communicate Club activities to the Members.
 
-    candidates:
-      - 
+    # candidates:
+    #   - 
 
   - name: Vice President, Finance
     desc: |
@@ -156,8 +156,8 @@ positions:
       * Organize meetings, when needed.
       * Direct communications between Executives, as required.
 
-    candidates:
-      - 
+    # candidates:
+    #   - 
 
 
   - name: Vice President, Academic
