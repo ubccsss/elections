@@ -62,6 +62,9 @@ bios:
       ## Vote Coco for CSSS VP External  
       Hi! My name is Coco and I am running for VP External this year. I am currently in the second year, studying Computer Science and Statistics. I have been serving as an officer since the start of this term and I would love to do more for the CSSS. My main task will be to run the annual technical career fair. I am someone who takes initiatives and enjoys logistics; I will dedicate my time and efforts to assist the CSSS in serving all the students.
 
+  # - name: Jack Mei
+  #   desc: |
+  #     None provided.
 
 
 positions:
@@ -131,8 +134,8 @@ positions:
       * Produce all advertising pertaining to Club business in all electronic and print media.
       * Communicate Club activities to the Members.
 
-    # candidates:
-    #   - 
+    candidates:
+      - Chris Ren
 
   - name: Vice President, Finance
     desc: |
@@ -156,8 +159,8 @@ positions:
       * Organize meetings, when needed.
       * Direct communications between Executives, as required.
 
-    # candidates:
-    #   - 
+    candidates:
+      - Jack Mei
 
 
   - name: Vice President, Academic
