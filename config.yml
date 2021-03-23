@@ -8,79 +8,41 @@ privatekey: "/home/a/amyjzhu/.ssh/private.pem"
 log: "/home/a/amyjzhu/public_html/elections.log"
 email: csss@ubccsss.org
 bios:
-  - name: Carmen Xu
+  - name: Ray Hua
     image: https://i.imgur.com/EMMgK3v.jpg
     desc: |
-      Hello I’m Carmen (she/her) and I’m running to be VP Volunteering. I’m currently a Social Officer who has helped organize and plan events such as CSSS Presents a Stable Matching Problem, Midterm Care Packages, Meet the Professors Night, and CSSS Presents: Royal Flush. As well, I’m currently a CPSC TA and I hope to use the skills that I’ve learned to help with this position.
-      I wanted to run for this position because I’m interested in having a greater role in the club.
-      My 3 main goals as VP Volunteering are to:
-      Encourage more students to help out with CSSS events, regardless of faculty.
-      Hold monthly team-socials to help officers bond and promote team synergy.
-      Work with other departments within the CSSS to help officers find the role that best fits them.
-      I’ve made so many friends through this club, and joining the CSSS club has been one of the best decisions I’ve made at UBC. Thank you for reading my blurb and I hope to have your vote in this election!
+      Hi there! I'm Ray, and I'm third year CS major running to be the VP-Finance of the CSSS. I've previously been the VP-Administration of the CSSS, and I'm ending a brief term as a Science AMS representative right now. The CSSS is a club focused on supporting CS students academically, career-wise, and socially, and as we move back into in-person learning, the CSSS needs to be able to bounce back to life. 
+      The VP-F's role is to support the club financially in this regard, and I will strive to responsibly manage the CSSS's funds to support club initiatives and events. My experience with the AMS and SUS will also allow me to better navigate the bureaucracy of these organizations that club treasurers must deal with. A goal I would hopefully like to achieve, building off the work of two preceding VP-Fs who 
+      have worked on this, is to organize and streamline the CSSS's internal financial workflow, and to better communicate our financial position to our members, recognizing that the latter depends on the former. Thanks for reading and voting!
 
-  - name: Emily Gubski 
+  - name: Bernardine Lee Ho 
     image: https://i.imgur.com/9OkgDO7.jpg
     desc: |
-      Hello everyone, my name is Emily and I am a third-year honors CPSC/MBIM student. I have spent 5 terms TAing the intro to computer science course and have spent 2 years working closely with faculty on course development. On top of that, I have also worked closely with the UBC CODE committee and have gotten to know many of the UBC CS faculty well.  
-      I have also worked in the AMS for two years in the presidents and the VPadmin portfolio meaning that I have an understanding of the inner workings of the AMS. I have also worked as an RA in upper-year housing for 2 years now. All in all, I have spent my undergrad working with students and faculty in various capacities and I think that puts me in a position to be able to advocate for student needs.  
-      My goal is to present CS student needs to the faculty and to act as a liaison to keep CS students in the loop about faculty decisions. A couple of things that I would like to look into are TA evaluation turn around times and faculty control over schedule/syllabus changes. 
+      Who am I: My name is Bernardine Lee Ho, and I’m pursuing a second bachelor’s degree in Computer Science (BCS) at University of British Columbia. I have previously completed a Bachelor of Commerce at University of Toronto. Prior to joining BCS, I worked full-time in the Financial Services Industry for a couple of years. While completing my first degree, I was involved in a student advisory committee, 
+      overseeing future plans within my faculty, and as a Marketing Coordinator for my university's e-Sports club. Why I am running for this position: I decided to run for VP Internal because I believe in the positive impact of student societies in enriching students’ university experience, and I want to contribute to the community as much as I can. Looking back to my experiences in my first undergrad, my 
+      involvement in student clubs and societies in my first undergrad are where I learned some of the best lessons and met my dearest friends. I want to provide this opportunity for my fellow computer science students. What I hope to accomplish as VP Internal: My goal is to provide a space for computer science students where they can have enriching lessons outside of the classroom, meet new friends, and 
+      make good memories. I understand the pressures that we all face as a computer science student, and my hope is that I can make your student life more pleasant by serving in the CSSS. How I will accomplish my goals: Having experience in both student societies and professional experience, I am confident that my experience will guide me to complete my duties effectively. I pledge to promote inclusivity 
+      among our community online and offline (once campus opens), diligently assist in the day-to-day operations of the CSSS, actively engage in conversations with our students and act upon your opinions and suggestions to ensure your needs are being met.
 
-  - name: Natalie Chen
+  - name: Zackarya Hamza
     image: https://i.imgur.com/tS6WodD.jpg
     desc: |
-      Hey guys!
+      Hi! My name is Zack Hamza and I am running for the VP Social of CSSS. Currently, I am a 2nd-year student majoring in Computer Science. I am running for this position as I intend to be responsible for promoting the amazing events that the CSSS has planned for the upcoming year. I am incredibly passionate about computer science and I hope to encourage the computer science community at UBC to attend 
+      our future events using our social media platform. I have past experience in promoting computer science events as I was the Social Media Lead of the CSCU (Computer Science Course Union) at UBC Okanagan, where I increased our following from 20 followers to around 230 followers today in a matter of a few months. I was also responsible for promoting BC Hacks 2.0, the CSCU's annual hackathon, where 
+      160+ students attended. I hope you will consider voting for me as the VP Social for CSSS so I can bring the same level of success to this wonderful student society.
 
-      It has been a great year serving as your VP Academic from 2019 to 2020. I look forward to the opportunity of becoming your President for the year of 2020/2021!  
-      If elected, I will continue to act as a front for the CS undergraduate society, making sure that student voices are both represented and heard at every table. From the smallest meetings among CSSS executives all the way to discussions with our department heads, you DESERVE to have your voices heard and recognized! Your executive team has accomplished so much in the past year with your help, and I hope to further our achievements in the next academic school year.  
-      I believe that by combining our school’s academic prowess and our ability to work together we will produce great results. I care about your interests and your voice. I care about making sure your CS opportunities--both inside and outside the classroom--are as equally distributed and available to each and every one of you. Come share your ideas, and together we will make them happen.  
-      Please feel free to contact me if you have any questions. I will answer them to the best of my ability.  
-      --Natalie Chen
-      <nataliechen1024@alumni.ubc.ca>
-
-  - name: Ethan Yeung
+  - name: Yutong Li 
     image: https://ubccsss.org/files/ethan_yeung_2019.jpg
     desc: |
-      Over my previous term, the CSSS has made a number of improvements in the club space. We have free tea and coffee, we have a Switch, and we have an expanded variety of meals and snacks available. If I am re-elected, I hope to regularize the stocking and availability of items, with a particular focus on keeping perishables like ice cream available.  
-      I’d like to think that the Cube is a nice place, and I’d like to keep it that way.
+      I'm running for CSSS communications VP because I feel like the CSSS could have better exposure to the CS population with a better communications structure and a prettier looking website. As an executive I will: Redevelop some pages of the CSSS website to make it easier to navigate. Organize the internal structure so that we don't require as many executives for the organization.
 
-  - name: Ray Zhang
+  - name: Leonard Wang
     image: https://i.imgur.com/bx9muUy.jpg
     desc: |
-      Hi I'm Ray.  
-
-      Other Ray.
-      No, other other Ray.  
-
-      I've served the CSSS as its VP Finance once before, though during personally troubled times I do not find myself to have fulfilled my duties to my own satisfaction. I want to fight for funding. I want to fight for grants. And I want to keep a system flowing so we aren't forced to remake the same mistakes, year after year as we roll over team after team without communication.
-      This year I seek to serve the CSSS once more, and this year I hope to work more closely with not only my team, but my successors, and unite student societies aligned in adjacent fields. I hope you will grant me the opportunity to do so, as now as it was then, and may the tidings of tomorrow bring good health to you all.
-
-
-  - name: Coco Wu
-    image: https://i.imgur.com/H9YR4ZE.jpg
-    desc: |
-      ## Vote Coco for CSSS VP External  
-      Hi! My name is Coco and I am running for VP External this year. I am currently in the second year, studying Computer Science and Statistics. I have been serving as an officer since the start of this term and I would love to do more for the CSSS. My main task will be to run the annual technical career fair. I am someone who takes initiatives and enjoys logistics; I will dedicate my time and efforts to assist the CSSS in serving all the students.
-
-  - name: Chris Ren
-    image: https://i.imgur.com/4iI2Bw5.jpg
-    desc: |
-      Hey! I'm Chris. I'm running to be your VP Social for CSSS.
-
-      I have leadership, teamwork, and organizational experience which I have shown over my time at post-secondary.
-
-      Before transferring to UBC, at Langara, I founded and ran the Ultimate Frisbee Club, setting the school student club membership total record, winning regionals against UBC, UVIC, SFU, and such, in our first year, and raising our balance to over $1000 by the second year.
-
-      At UBC, I was VP External for UBC EDM, which I spearheaded our couple term events: one at the ESC Building, landing a $1000 and product sponsorship from Fireball, and second at Celebrities Nightclub which we funded and ran 100% independently with tasks from the venue and equipment bookings, using our own DJs, and organizing a couple of busses, for an attendance of 300 people.
-
-      I as well organize events off-campus through my sole proprietorship, dealing directly with venue owners and managers, brand reps, and businesses, to put together events with attendances as large as 800+ people.
-
-      I will utilize my skills and experiences to create events for CSSS, continuing with the ones we have now as well as creating new bigger and better to add. I appreciate the CSSS and the friends that I have been able to make from being around the CUBE this year, and I hope to give back and contribute a positive impact for CSSS.
-
-  - name: Jack Mei
-    image: https://i.imgur.com/ljJrqCy.png
-    desc: |
-      My plan if I am elected into this position is simple : make the computer science student society a better place for all, regardless of major.  This entails making the society feel more welcoming, and having a greater exposure to the many students.  
+      My name is Leonard, a 3rd-year Computer Science student currently interning at TD Capital Markets as a quantitative research analyst, and I will be joining Amazon in the summer of 2021 as a product manager for AWS in their Toronto office. I am very passionate about education and bridging the gap between technology and other disciplinary fields, and this passion is evidently reflected in what I do. 
+      I was elected in 2020 as a national scholar as well as the youngest member to serve on the board of Computer Science Canada, along with two Nobel Prize Laureates to advance Canadian computing research, education, and innovation. During my term, I have organized several large student initiative programs such as the CS-Can Symposium and Canadian Undergraduate Computer Science Conference to educate 
+      young leaders, and funded more than 20 advanced university research projects that have changed the world for the better. My objective is to provide more research opportunities for everyone and to guarantee an internship for all of our undergraduate students leveraging my connections and resources. I promise you to put all UBC students’ well-being above my own and to endeavour my very best to 
+      create a better degree experience for everyone. I would be honoured and humbled to be part of the CSSS and I reassure you that you will not regret your decision for this leap of faith.
 
 positions:
   - name: President
@@ -98,7 +60,7 @@ positions:
       * Act as chief spokesperson on behalf of the Club.
 
     candidates:
-      - Natalie Chen
+      - Leonard Wang
 
   - name: Vice President, Volunteering
     desc: |
@@ -107,8 +69,8 @@ positions:
       * Recruit undergraduate representatives to serve on Department committees.
       * Organize the recruitment of undergraduate students in the Department into other volunteer positions.
 
-    candidates:
-      - Carmen Xu
+    # candidates:
+    #   - 
 
   - name: Vice President, Internal
     desc: |
@@ -121,7 +83,7 @@ positions:
       * Chair executive meetings in the absence of the president.
 
     candidates:
-      - Ethan Yeung
+      - Bernardine Lee Ho 
 
   - name: Vice President, External
     desc: |
@@ -130,8 +92,8 @@ positions:
       * Liaise with companies and other entities outside the University via the relevant member of the Department.
       * Plan, supervise, and recruit assistance in executing the annual Career Fair.
       * Organize the acquisition of sponsored materials from companies for use as prizes and handouts to Members.
-    candidates:
-      - Coco Wu
+    # candidates:
+    #   - 
 
   - name: Vice President, Social
     desc: |
@@ -140,7 +102,7 @@ positions:
       * Be responsible for the planning, cost estimation, and execution of social and sporting events undertaken by the Club.
 
     candidates:
-      - Chris Ren
+      - Zackarya Hamza
 
   - name: Vice President, Communications
     desc: |
@@ -149,8 +111,8 @@ positions:
       * Produce all advertising pertaining to Club business in all electronic and print media.
       * Communicate Club activities to the Members.
 
-    # candidates:
-    #   - 
+    candidates:
+      - Yutong Li
 
   - name: Vice President, Finance
     desc: |
@@ -164,7 +126,7 @@ positions:
       * Assist other officers in their interactions with the Alma Mater Society or any of its Commissions, if needed.
 
     candidates:
-      - Ray Zhang
+      - Ray Hua
 
   - name: Vice President, Administration
     desc: |
@@ -174,8 +136,8 @@ positions:
       * Organize meetings, when needed.
       * Direct communications between Executives, as required.
 
-    candidates:
-      - Jack Mei
+    # candidates:
+    #   - 
 
 
   - name: Vice President, Academic
@@ -186,5 +148,5 @@ positions:
       * Manage academic resources provided by the club, including the exam database and tutoring services
       * Direct academic-focused events undertaken by the Club
 
-    candidates:
-      - Emily Gubski
+    # candidates:
+    #   - 
