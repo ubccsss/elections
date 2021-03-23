@@ -1,22 +1,22 @@
-dbpath: /home/a/amyjzhu/public_html/dbfile.db
+dbpath: /home/kerk0100/public_html/dbfile.db
 open: true
 admins:
-  - amyjzhu
-  - s7p0b
-studentids: "/home/a/amyjzhu/csss/sids.txt"
-privatekey: "/home/a/amyjzhu/.ssh/private.pem"
-log: "/home/a/amyjzhu/public_html/elections.log"
+  - kerk0100
+  - w4v2b
+studentids: "/home/kerk0100/csss/sids.txt"
+privatekey: "/home/kerk0100/.ssh/private.pem"
+log: "/home/kerk0100/public_html/elections.log"
 email: csss@ubccsss.org
 bios:
   - name: Ray Hua
-    image: https://i.imgur.com/EMMgK3v.jpg
+    image: /images/ray_hua.png
     desc: |
       Hi there! I'm Ray, and I'm third year CS major running to be the VP-Finance of the CSSS. I've previously been the VP-Administration of the CSSS, and I'm ending a brief term as a Science AMS representative right now. The CSSS is a club focused on supporting CS students academically, career-wise, and socially, and as we move back into in-person learning, the CSSS needs to be able to bounce back to life. 
       The VP-F's role is to support the club financially in this regard, and I will strive to responsibly manage the CSSS's funds to support club initiatives and events. My experience with the AMS and SUS will also allow me to better navigate the bureaucracy of these organizations that club treasurers must deal with. A goal I would hopefully like to achieve, building off the work of two preceding VP-Fs who 
       have worked on this, is to organize and streamline the CSSS's internal financial workflow, and to better communicate our financial position to our members, recognizing that the latter depends on the former. Thanks for reading and voting!
 
   - name: Bernardine Lee Ho 
-    image: https://i.imgur.com/9OkgDO7.jpg
+    image: /images/bernardine.jpg
     desc: |
       Who am I: My name is Bernardine Lee Ho, and I’m pursuing a second bachelor’s degree in Computer Science (BCS) at University of British Columbia. I have previously completed a Bachelor of Commerce at University of Toronto. Prior to joining BCS, I worked full-time in the Financial Services Industry for a couple of years. While completing my first degree, I was involved in a student advisory committee, 
       overseeing future plans within my faculty, and as a Marketing Coordinator for my university's e-Sports club. Why I am running for this position: I decided to run for VP Internal because I believe in the positive impact of student societies in enriching students’ university experience, and I want to contribute to the community as much as I can. Looking back to my experiences in my first undergrad, my 
@@ -25,19 +25,19 @@ bios:
       among our community online and offline (once campus opens), diligently assist in the day-to-day operations of the CSSS, actively engage in conversations with our students and act upon your opinions and suggestions to ensure your needs are being met.
 
   - name: Zackarya Hamza
-    image: https://i.imgur.com/tS6WodD.jpg
+    image: /images/zack.jpg
     desc: |
       Hi! My name is Zack Hamza and I am running for the VP Social of CSSS. Currently, I am a 2nd-year student majoring in Computer Science. I am running for this position as I intend to be responsible for promoting the amazing events that the CSSS has planned for the upcoming year. I am incredibly passionate about computer science and I hope to encourage the computer science community at UBC to attend 
       our future events using our social media platform. I have past experience in promoting computer science events as I was the Social Media Lead of the CSCU (Computer Science Course Union) at UBC Okanagan, where I increased our following from 20 followers to around 230 followers today in a matter of a few months. I was also responsible for promoting BC Hacks 2.0, the CSCU's annual hackathon, where 
       160+ students attended. I hope you will consider voting for me as the VP Social for CSSS so I can bring the same level of success to this wonderful student society.
 
   - name: Yutong Li 
-    image: https://ubccsss.org/files/ethan_yeung_2019.jpg
+    image: 
     desc: |
       I'm running for CSSS communications VP because I feel like the CSSS could have better exposure to the CS population with a better communications structure and a prettier looking website. As an executive I will: Redevelop some pages of the CSSS website to make it easier to navigate. Organize the internal structure so that we don't require as many executives for the organization.
 
   - name: Leonard Wang
-    image: https://i.imgur.com/bx9muUy.jpg
+    image: /images/leonard.jpg
     desc: |
       My name is Leonard, a 3rd-year Computer Science student currently interning at TD Capital Markets as a quantitative research analyst, and I will be joining Amazon in the summer of 2021 as a product manager for AWS in their Toronto office. I am very passionate about education and bridging the gap between technology and other disciplinary fields, and this passion is evidently reflected in what I do. 
       I was elected in 2020 as a national scholar as well as the youngest member to serve on the board of Computer Science Canada, along with two Nobel Prize Laureates to advance Canadian computing research, education, and innovation. During my term, I have organized several large student initiative programs such as the CS-Can Symposium and Canadian Undergraduate Computer Science Conference to educate 
