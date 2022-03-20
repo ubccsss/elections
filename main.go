@@ -425,7 +425,7 @@ func setup() (*server, error) {
 	// be n copies operating at the same time.
 	db, err := gorm.Open("sqlite3", c.DBPath)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to connect to database with path")
+		return nil, errors.Wrapf(err, "failed to connect to database")
 	}
 
 	if *migrate {
