@@ -1,48 +1,17 @@
-dbpath: /home/kerk0100/public_html/dbfile.db
+dbpath: /home/ericy676/public_html/elections.db
 open: true
 admins:
-  - kerk0100
-  - w4v2b
-studentids: "/home/kerk0100/csss/sids.txt"
-privatekey: "/home/kerk0100/.ssh/private.pem"
-log: "/home/kerk0100/public_html/elections.log"
+  - ericy676
+studentids: "/home/ericy676/csss/sids.txt"
+privatekey: "/home/ericy676/csss/private.pem"
+log: "/home/ericy676/public_html/elections.log"
 email: csss@ubccsss.org
 bios:
   - name: Ray Hua
     image: /images/ray_hua.png
     desc: |
-      Hi there! I'm Ray, and I'm third year CS major running to be the VP-Finance of the CSSS. I've previously been the VP-Administration of the CSSS, and I'm ending a brief term as a Science AMS representative right now. The CSSS is a club focused on supporting CS students academically, career-wise, and socially, and as we move back into in-person learning, the CSSS needs to be able to bounce back to life. 
-      The VP-F's role is to support the club financially in this regard, and I will strive to responsibly manage the CSSS's funds to support club initiatives and events. My experience with the AMS and SUS will also allow me to better navigate the bureaucracy of these organizations that club treasurers must deal with. A goal I would hopefully like to achieve, building off the work of two preceding VP-Fs who 
-      have worked on this, is to organize and streamline the CSSS's internal financial workflow, and to better communicate our financial position to our members, recognizing that the latter depends on the former. Thanks for reading and voting!
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus id bibendum nisi, a vestibulum lectus. Suspendisse blandit facilisis dolor, vel cursus diam lobortis a. Phasellus convallis pretium justo. Sed id scelerisque risus, ac porta mauris. Nam eu ultricies neque, eget ullamcorper magna. Vestibulum vehicula ultrices augue, in mollis risus cursus a. Quisque in gravida metus. Aenean laoreet viverra magna at suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur felis sem, ultrices in scelerisque vel, rutrum in felis.
 
-  - name: Bernardine Lee Ho 
-    image: /images/bernardine.jpg
-    desc: |
-      Who am I: My name is Bernardine Lee Ho, and I’m pursuing a second bachelor’s degree in Computer Science (BCS) at University of British Columbia. I have previously completed a Bachelor of Commerce at University of Toronto. Prior to joining BCS, I worked full-time in the Financial Services Industry for a couple of years. While completing my first degree, I was involved in a student advisory committee, 
-      overseeing future plans within my faculty, and as a Marketing Coordinator for my university's e-Sports club. Why I am running for this position: I decided to run for VP Internal because I believe in the positive impact of student societies in enriching students’ university experience, and I want to contribute to the community as much as I can. Looking back to my experiences in my first undergrad, my 
-      involvement in student clubs and societies in my first undergrad are where I learned some of the best lessons and met my dearest friends. I want to provide this opportunity for my fellow computer science students. What I hope to accomplish as VP Internal: My goal is to provide a space for computer science students where they can have enriching lessons outside of the classroom, meet new friends, and 
-      make good memories. I understand the pressures that we all face as a computer science student, and my hope is that I can make your student life more pleasant by serving in the CSSS. How I will accomplish my goals: Having experience in both student societies and professional experience, I am confident that my experience will guide me to complete my duties effectively. I pledge to promote inclusivity 
-      among our community online and offline (once campus opens), diligently assist in the day-to-day operations of the CSSS, actively engage in conversations with our students and act upon your opinions and suggestions to ensure your needs are being met.
-
-  - name: Zackarya Hamza
-    image: /images/zack.jpg
-    desc: |
-      Hi! My name is Zack Hamza and I am running for the VP Social of CSSS. Currently, I am a 2nd-year student majoring in Computer Science. I am running for this position as I intend to be responsible for promoting the amazing events that the CSSS has planned for the upcoming year. I am incredibly passionate about computer science and I hope to encourage the computer science community at UBC to attend 
-      our future events using our social media platform. I have past experience in promoting computer science events as I was the Social Media Lead of the CSCU (Computer Science Course Union) at UBC Okanagan, where I increased our following from 20 followers to around 230 followers today in a matter of a few months. I was also responsible for promoting BC Hacks 2.0, the CSCU's annual hackathon, where 
-      160+ students attended. I hope you will consider voting for me as the VP Social for CSSS so I can bring the same level of success to this wonderful student society.
-
-  - name: Yutong Li 
-    image: 
-    desc: |
-      I'm running for CSSS communications VP because I feel like the CSSS could have better exposure to the CS population with a better communications structure and a prettier looking website. As an executive I will: Redevelop some pages of the CSSS website to make it easier to navigate. Organize the internal structure so that we don't require as many executives for the organization.
-
-  - name: Leonard Wang
-    image: /images/leonard.jpg
-    desc: |
-      My name is Leonard, a 3rd-year Computer Science student currently interning at TD Capital Markets as a quantitative research analyst, and I will be joining Amazon in the summer of 2021 as a product manager for AWS in their Toronto office. I am very passionate about education and bridging the gap between technology and other disciplinary fields, and this passion is evidently reflected in what I do. 
-      I was elected in 2020 as a national scholar as well as the youngest member to serve on the board of Computer Science Canada, along with two Nobel Prize Laureates to advance Canadian computing research, education, and innovation. During my term, I have organized several large student initiative programs such as the CS-Can Symposium and Canadian Undergraduate Computer Science Conference to educate 
-      young leaders, and funded more than 20 advanced university research projects that have changed the world for the better. My objective is to provide more research opportunities for everyone and to guarantee an internship for all of our undergraduate students leveraging my connections and resources. I promise you to put all UBC students’ well-being above my own and to endeavour my very best to 
-      create a better degree experience for everyone. I would be honoured and humbled to be part of the CSSS and I reassure you that you will not regret your decision for this leap of faith.
 
 positions:
   - name: President
@@ -59,8 +28,8 @@ positions:
       * Be responsible for the overall Club.
       * Act as chief spokesperson on behalf of the Club.
 
-    candidates:
-      - Leonard Wang
+    # candidates:
+    #   - 
 
   - name: Vice President, Volunteering
     desc: |
@@ -82,8 +51,8 @@ positions:
       * Organize, or appoint an officer to organize, supply runs to restock Club inventories.
       * Chair executive meetings in the absence of the president.
 
-    candidates:
-      - Bernardine Lee Ho 
+    # candidates:
+    #   - 
 
   - name: Vice President, External
     desc: |
@@ -101,8 +70,8 @@ positions:
 
       * Be responsible for the planning, cost estimation, and execution of social and sporting events undertaken by the Club.
 
-    candidates:
-      - Zackarya Hamza
+    # candidates:
+    #   - 
 
   - name: Vice President, Communications
     desc: |
@@ -111,8 +80,8 @@ positions:
       * Produce all advertising pertaining to Club business in all electronic and print media.
       * Communicate Club activities to the Members.
 
-    candidates:
-      - Yutong Li
+    # candidates:
+    #   - 
 
   - name: Vice President, Finance
     desc: |
@@ -125,8 +94,8 @@ positions:
       * Be responsible for the purchase and sale of any of the Club’s merchandise.
       * Assist other officers in their interactions with the Alma Mater Society or any of its Commissions, if needed.
 
-    candidates:
-      - Ray Hua
+    # candidates:
+    #   -
 
   - name: Vice President, Administration
     desc: |
