@@ -34,7 +34,7 @@ import (
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/pkg/errors"
 
-	blackfriday "gopkg.in/russross/blackfriday.v2"
+	blackfriday "github.com/russross/blackfriday/v2"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -425,7 +425,7 @@ func setup() (*server, error) {
 	// be n copies operating at the same time.
 	db, err := gorm.Open("sqlite3", c.DBPath)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to connect to database")
+		return nil, errors.Wrapf(err, "failed to connect to database with path")
 	}
 
 	if *migrate {
