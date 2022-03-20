@@ -25,4 +25,5 @@ _testmain.go
 
 *.db
 *.cgi
+*.log
 elections
