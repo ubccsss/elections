@@ -1,10 +1,10 @@
-dbpath: /home/ericy676/public_html/elections.db
+dbpath: /home/e/ericy676/public_html/elections.db
 open: true
 admins:
   - ericy676
-studentids: "/home/ericy676/csss/sids.txt"
-privatekey: "/home/ericy676/csss/private.pem"
-log: "/home/ericy676/public_html/elections.log"
+studentids: "/home/e/ericy676/csss/sids.txt"
+privatekey: "/home/e/ericy676/csss/private.pem"
+log: "/home/e/ericy676/public_html/elections.log"
 email: csss@ubccsss.org
 bios:
   - name: Ray Hua
