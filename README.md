@@ -20,6 +20,12 @@
 10. In your other teminal for `~/csss`, create `sids.txt` and fill it in with information you get from Giuliana or whichever admin from the CS department is in charge 
 11.  Test. If something fails, erase, re-bootstrap the elections.db and run `./elections.cgi -migrate` again.
 
+## Updating template, style, scripts
+If there are stylistic/structural changes to our main website, you may want to sync those changes here in this repo. The way to do it is simply by running `go run gettemplate/gettemplate.go` in the root folder. Note that this currently `gettemplate.go` is outdated so you will have to manually change a couple things in the new `template.html` file. This includes:
+1. Make sure that the html between the header and footer tags is "empty". See previous git commits for `template.html` for examples
+2. Get rid of the integrity property in the style.css link tag (there might be a better solution?)
+3. Fix broken images by adding the `https://ubccsss.org` prefix
+
 
 ## References
 - https://my.cs.ubc.ca/docs/setting-personal-website
