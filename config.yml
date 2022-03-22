@@ -8,7 +8,7 @@ log: "/home/e/ericy676/public_html/elections.log"
 email: csss@ubccsss.org
 bios:
   - name: Ray Hua
-    image: /images/ray_hua.png
+    image: ../images/ray_hua.png
     desc: |
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus id bibendum nisi, a vestibulum lectus. Suspendisse blandit facilisis dolor, vel cursus diam lobortis a. Phasellus convallis pretium justo. Sed id scelerisque risus, ac porta mauris. Nam eu ultricies neque, eget ullamcorper magna. Vestibulum vehicula ultrices augue, in mollis risus cursus a. Quisque in gravida metus. Aenean laoreet viverra magna at suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur felis sem, ultrices in scelerisque vel, rutrum in felis.
 
@@ -28,8 +28,8 @@ positions:
       * Be responsible for the overall Club.
       * Act as chief spokesperson on behalf of the Club.
 
-    # candidates:
-    #   - 
+    candidates:
+      - Ray Hua
 
   - name: Vice President, Volunteering
     desc: |
