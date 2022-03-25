@@ -11,6 +11,10 @@ bios:
     image: ../images/ray_hua.png
     desc: |
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus id bibendum nisi, a vestibulum lectus. Suspendisse blandit facilisis dolor, vel cursus diam lobortis a. Phasellus convallis pretium justo. Sed id scelerisque risus, ac porta mauris. Nam eu ultricies neque, eget ullamcorper magna. Vestibulum vehicula ultrices augue, in mollis risus cursus a. Quisque in gravida metus. Aenean laoreet viverra magna at suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur felis sem, ultrices in scelerisque vel, rutrum in felis.
+  - name: Jason Hsu
+      image: ../images/jason_hsu.png
+      desc: |
+        Ello, I'm Jason. 3rd year CPSC. You might have seen me around in the ICICS or the Cube and if you've taken CPSC 121 in the past 2 years you've probably had me as a TA :) my first action if elected president will be to BAN TYPES, mandate that all coding be done solely with GITHUB COPILOT, and erect a temple in the ICICS to the GLORY OF NATURAL RECURSION. Jokes aside, I think it's sad how the CSSS has been stagnating in the past few years with COVID and other circumstances. For example, many internal processes and documents such as the constitution haven't even been reviewed since 2019 (did you know the constitution still refers to the President as "he"?). I'm running because I want to help the CSSS thrive again. I have too many ideas to put here, but if you have any questions or suggestions, definitely contact me at jsnhsu@(student dot ubc dot ca) or @Argonaut#1875 on discord!
 
 
 positions:
@@ -30,6 +34,7 @@ positions:
 
     candidates:
       - Ray Hua
+      - Jason Hsu
 
   - name: Vice President, Volunteering
     desc: |
