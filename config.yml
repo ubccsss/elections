@@ -8,9 +8,37 @@ log: "/home/e/ericy676/public_html/elections.log"
 email: csss@ubccsss.org
 bios:
   - name: Ray Hua
-    image: ../images/ray_hua.png
+    image: ../images/Ray.png
     desc: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus id bibendum nisi, a vestibulum lectus. Suspendisse blandit facilisis dolor, vel cursus diam lobortis a. Phasellus convallis pretium justo. Sed id scelerisque risus, ac porta mauris. Nam eu ultricies neque, eget ullamcorper magna. Vestibulum vehicula ultrices augue, in mollis risus cursus a. Quisque in gravida metus. Aenean laoreet viverra magna at suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur felis sem, ultrices in scelerisque vel, rutrum in felis.
+      As VP-Academic, I will continue to build on the work started this year by Eric, the current VP-Academic, and continue to restore the exams database, build on the new courses database, and work with the department on Academic matters. I will work to ensure I hear any and all concerns of an academic nature students may have and communicate them with the Department. I will find, publish, and press the department to implement the recommendations of the CS External Review and the Program Evaluation and Review. Bottom line, I will ensure that the CSSS and the Department will have better lines of communication for academic matters going forward. It's what we're supposed to be here for, after all. I guess this is the part where I list previous things I've done. I've been a CSSS exec for 2 years (VP-Admin and current VP-Finance) and an AMS representative in the past. I've sat on the UBC VP-Students Student Advisory Council. I've done other stuff. Most of it not that interesting.
+  - name: Jason Hsu
+    image: ../images/Jason.jpg
+    desc: |
+      Ello, I'm Jason. 3rd year CPSC. You might have seen me around in the ICICS or the Cube and if you've taken CPSC 121 in the past 2 years you've probably had me as a TA :) my first action if elected president will be to BAN TYPES, mandate that all coding be done solely with GITHUB COPILOT, and erect a temple in the ICICS to the GLORY OF NATURAL RECURSION. Jokes aside, I think it's sad how the CSSS has been stagnating in the past few years with COVID and other circumstances. For example, many internal processes and documents such as the constitution haven't even been reviewed since 2019 (did you know the constitution still refers to the President as "he"?). I'm running because I want to help the CSSS thrive again. I have too many ideas to put here, but if you have any questions or suggestions, definitely contact me at jsnhsu@(student dot ubc dot ca) or @Argonaut#1875 on discord!	
+  - name: Mike Ju, Shubh Bhalla
+    image: ../images/Mike_Shubh.jpg
+    desc: |
+      Hi CS students! We are Mike Ju and Shubh Bhalla. Mike is a fourth-year computer science student specializing in software engineering and Shubh is a third-year computer science student. It is our honour to be running as Co-Presidents this year. Serving at CSSS for two years, we worked closely with you and presented Technical Career Fair, CSSS Tech Industry Nights, Research Night, and headshot events. For the next academic year, you will be enjoying all the services currently provided by CSSS and will have further access to: - A series of career-related events: take onsite interview with company recruiters at industry night, get you free professional headshots, and get paired up with a senior student as a career mentor - Abundant academic resources: a more complete and accurate past exam database, a more affordable tutoring platform, and personal projects and coding workshops. - Department-level negotiation: have your voice heard by the CS Department more regularly and clearly.
+  - name: Bernadine Lee Ho
+    image: ../images/Bernardine.jpg
+    desc: |
+      I am running to continue my contribution to the CSSS - this time as VP Admin. I served as the VP Internal in this past academic year (2021-2022), and it has been an absolute pleasure providing services to our students. Along with my great team of Internal Officers, we were able to keep the Cube (ICS 021) open to provide our students with a place to wind down, study, meet great folks, and find affordable food options. This time, I want to try a new role within the CSSS and run for VP Admin, where I can provide my time to help our organization's meetings run smoothly and have our communication open. As VP Admin, I will ensure that all of the meetings will be properly documented and published for full transparency. My goal remains to serve our students and create an inclusive community for a greater learning experience for all.
+  - name: Devrat Tiwari
+    image: ../images/Devrat.jpg
+    desc: |
+      I have been the Volunteering Officer in CSSS for the last 6 months and have contributed immensely during my time here in all events and have been very active to provide support to the club and its working in every possible way! As the VP Volunteering, I commit to raise the bar and make everything more accessible to all the people on campus (and not just CS students), so that everyone can enjoy and avail the benefits of what CSSS has to offer! Some of the tasks that I will be undertaking in the capacity of VP Volunteering are: 1. Involving higher engagement of all students with the club and CS in general. 2. Effectively voicing the opinions and ideas of students to the higher leadership and accordingly devise new strategies and execute changes for all. 3. Regularly communicate about the upcoming events and improve them by assessing the outcomes of previous ones. 4. Alongside for the whole campus, also conduct events at The Cube to make CSSS a more vibrant and active community!
+  - name: Byron Wang
+    image: ../images/Byron.jpg
+    desc: |
+      Hey UBC CS! My name is Byron Wang, I'm a third year combined CS + MBIM student and I'm excited to announce that I'll be running to be the next UBC CSSS VP Social! I've always had a passion for social gatherings, having held multiple leadership positions in the past, the most recent being the current Social Co-Chair for the Science Undergraduate Society this year, where we successfully planned events for the UBC Science community such as a trivia night and a matchmaking event with around 100 signups per event! If elected to be the next VP Social, I'll utilize my experience to execute events that centre around inclusivity and engagement! With experience in working with a diverse group of individuals especially through my time in a combined major, I plan on catering unique events to target the different interests within our vast major! Not only do I intend to use your input through anonymous submissions, but I'll ensure to work with the other committees to maximize turnout! :)
+  - name: Aidan Perras
+    image: ../images/Aidan.jpeg
+    desc: |
+     My name is Aidan Perras. I'm currently entering my 4th year at UBC and I am running for VP-Social. I've been a part of the CSSS since I've entered UBC in my first year. Since then I've always wanted the chance to give back to this amazing club. By voting me in, I will do my best to return events like the cs gala, the welcome back bbq, and to have more community outreach programs to increase involvment. Additionally, my goals are to increase awareness of the CSSS since covid has dwindled our numbers and most people aren't even aware of what the CSSS is. I just want to make the CSSS a better place for everyone. I hope that you'll vote for me. Thank you.
+  - name: William Gervasio
+    image: ../images/William.png
+    desc: |
+      Are you more interested in software development for CS, rather than the current curriculum? Or are you interested in research events down the line? Perhaps you are interested in learning more about interdisciplinary things like quantum computing or disease modelling. Do you find that the systems for accessibility are frustrating? As the VP Academic, these types of questions will be my priority to address. As a TA since 2020, I have worked with faculty to help deliver your content in labs and office hours. Meanwhile, I will be starting my fourth year in September as a student, living the same struggle/success as you. Whether through open surveys or simple chats in the Cube, I would be able to bring your ideas to that work table to help shape your experience. This is not something new to me; I managed the training at my local Cadet unit not too long ago. That's it from me. I'm always open to chatting after classes. Just give me a heads up!
 
 
 positions:
@@ -29,7 +57,8 @@ positions:
       * Act as chief spokesperson on behalf of the Club.
 
     candidates:
-      - Ray Hua
+      - Mike Ju, Shubh Bhalla
+      - Jason Hsu
 
   - name: Vice President, Volunteering
     desc: |
@@ -38,8 +67,8 @@ positions:
       * Recruit undergraduate representatives to serve on Department committees.
       * Organize the recruitment of undergraduate students in the Department into other volunteer positions.
 
-    # candidates:
-    #   - 
+    candidates:
+      - Devrat Tiwari
 
   - name: Vice President, Internal
     desc: |
@@ -70,8 +99,9 @@ positions:
 
       * Be responsible for the planning, cost estimation, and execution of social and sporting events undertaken by the Club.
 
-    # candidates:
-    #   - 
+    candidates:
+      - Byron Wang
+      - Aidan Perras
 
   - name: Vice President, Communications
     desc: |
@@ -105,8 +135,8 @@ positions:
       * Organize meetings, when needed.
       * Direct communications between Executives, as required.
 
-    # candidates:
-    #   - 
+    candidates:
+      - Bernadine Lee Ho 
 
 
   - name: Vice President, Academic
@@ -117,5 +147,6 @@ positions:
       * Manage academic resources provided by the club, including the exam database and tutoring services
       * Direct academic-focused events undertaken by the Club
 
-    # candidates:
-    #   - 
+    candidates:
+      - Ray Hua
+      - William Gervasio
