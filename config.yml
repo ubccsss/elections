@@ -2,6 +2,7 @@ dbpath: /home/e/ericy676/public_html/elections.db
 open: true
 admins:
   - ericy676
+  - ytongli
 studentids: "/home/e/ericy676/csss/sids.txt"
 privatekey: "/home/e/ericy676/csss/private.pem"
 log: "/home/e/ericy676/public_html/elections.log"
@@ -39,6 +40,12 @@ bios:
     image: ../images/William.png
     desc: |
       Are you more interested in software development for CS, rather than the current curriculum? Or are you interested in research events down the line? Perhaps you are interested in learning more about interdisciplinary things like quantum computing or disease modelling. Do you find that the systems for accessibility are frustrating? As the VP Academic, these types of questions will be my priority to address. As a TA since 2020, I have worked with faculty to help deliver your content in labs and office hours. Meanwhile, I will be starting my fourth year in September as a student, living the same struggle/success as you. Whether through open surveys or simple chats in the Cube, I would be able to bring your ideas to that work table to help shape your experience. This is not something new to me; I managed the training at my local Cadet unit not too long ago. That's it from me. I'm always open to chatting after classes. Just give me a heads up!
+  - name: Aaron Fos-oy
+    image: ../images/Aaron.jpg
+    desc: |
+      Hi everyone, my name is Aaron and I am a current 3rd year student within the Combined Major in Computer Science and Microbiology & Immunology program at UBC! When I’m not trusting the natural recursion, or struggling to figure out what to look for in my BLAST results, you can find me playing ultimate frisbee at intramurals or taking pictures for my friends’ LinkedIn portfolios!
+      
+      As a current associate VP Communications within the Science Undergraduate Society, I have experience working in driving engagement within the Science community including: helping manage the social media platforms, and working with the teams under the Communications portfolio. With a position as VP Communications for Computer Science Student Society, I hope to work towards providing up-to-date and engaging promotions on opportunities and events for students within the CS community. I also hope to make use of/increase external resources, in building promotions, available to CSSS from other clubs (e.g. SUS visual media and marketing team). With the goal of driving student engagement through CSSS electronic and print media to students within the CS community I hope to be your next Vice President, Communications.
 
 
 positions:
@@ -110,8 +117,8 @@ positions:
       * Produce all advertising pertaining to Club business in all electronic and print media.
       * Communicate Club activities to the Members.
 
-    # candidates:
-    #   - 
+    candidates:
+      - Aaron Fos-oy 
 
   - name: Vice President, Finance
     desc: |
