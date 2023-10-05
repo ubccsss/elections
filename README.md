@@ -29,6 +29,27 @@ To copy over the headshots from your local machine, use `scp ./local_path yourcw
 
 If certain positions are not being voted on, you can delete them from the `positions` key in `config.yml`. Otherwise, under `positions.candidates`, list the candidates for that position. The values provided must exactly match the names of candidates in the `bios` section.
 
+## Tallying Votes
+`sqlite3` has been installed on the department servers, so run `sqlite3 ~/public_html/elections.db` to get access to the vote database. 
+
+This is the table schema for the `votes` table:
+```
+sqlite> pragma table_info(votes);
+0|id|INTEGER|0||1
+1|created_at|datetime|0||0
+2|updated_at|datetime|0||0
+3|deleted_at|datetime|0||0
+4|position|varchar(255)|0||0
+5|candidate|varchar(255)|0||0
+```
+
+For elections with uncontested positions, run the following to view the results of the election:
+```sql
+SELECT position, candidate, count(distinct id) FROM votes GROUP BY position, candidate;
+```
+
+Refer to the constitution for the election win criteria for contested positions.
+
 ## Updating template, style, scripts
 If there are stylistic/structural changes to our main website, you may want to sync those changes here in this repo. The way to do it is simply by running `go run gettemplate/gettemplate.go` in the root folder. Note that this currently `gettemplate.go` is outdated so you will have to manually change a couple things in the new `template.html` file. This includes:
 1. Make sure that the html between the header and footer tags is "empty". See previous git commits for `template.html` for examples
